@@ -1,0 +1,16 @@
+body {
+  background-color: #feebb2;
+  /* overflow: hidden; */
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow: visible;
+  }
+}
+
+@media (min-width: 769px) {
+  body {
+    overflow: hidden;
+  }
+}
