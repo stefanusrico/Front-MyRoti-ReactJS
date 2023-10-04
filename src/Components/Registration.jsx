@@ -8,7 +8,7 @@ export default function Registration() {
                     <div className="bg-coklat border-2 border-black rounded-lg">
                         <div className="text-center font-bold text-2xl p-5">REGISTRATION</div>
                         
-                        <div className="text-center text-l p-4 md:p-6">
+                        <div className="text-center text-l p-4 md:p-4">
                             <p>Pilih Peran</p>
                             <select
                                 className="p-2 w-full md:w-64 border-2 border-black rounded-xl bg-coklat-kuning"
@@ -21,7 +21,18 @@ export default function Registration() {
                             </select>
                         </div>
 
-                        <div className="text-center text-l p-4 md:p-4">
+                        <div className="text-center text-l p-4 md:p-1">
+                            <p>Masukkan Nama</p>
+                            <input
+                                className="p-2 w-full md:w-64 border-2 border-black rounded-xl bg-coklat-kuning placeholder-black"
+                                type="text"
+                                id="namaInput"
+                                placeholder="Nama"
+                                autoComplete="none"
+                            />
+                        </div>
+
+                        <div className="text-center text-l p-4 md:p-1">
                             <p>Masukkan Username</p>
                             <input
                                 className="p-2 w-full md:w-64 border-2 border-black rounded-xl bg-coklat-kuning placeholder-black"
@@ -32,7 +43,7 @@ export default function Registration() {
                             />
                         </div>
 
-                        <div className="text-center text-l p-4 md:p-4">
+                        <div className="text-center text-l p-4 md:p-1">
                             <p>Masukkan Password</p>
                             <input
                                 className="p-2 w-full md:w-64 border-2 border-black rounded-xl bg-coklat-kuning placeholder-black"
@@ -43,7 +54,7 @@ export default function Registration() {
                             />
                         </div>
 
-                        <div className="text-center text-m p-4 md:p-4">
+                        <div className="text-center text-m p-4 md:p-1">
                             <p>Masukkan Ulang Password</p>
                             <input
                                 className="p-2 w-full md:w-64 border-2 border-black rounded-xl bg-coklat-kuning placeholder-black"
