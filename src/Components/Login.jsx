@@ -1,17 +1,59 @@
 import React from "react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import "../Styles/Login.css"
+// import "@hookform/devstate"
+import axios from "axios"
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+
+  const navigate = useNavigate()
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/login", {
+        username: username,
+        password: password,
+      })
+      console.log(response)
+
+      if (response.data.success) {
+        setUsername("")
+        setPassword("")
+        setError("")
+        navigate("/")
+      } else {
+        if (response.status === 400) {
+          console.log("test gaming error")
+          setError("Invalid username or password.")
+        } else {
+          setError(response.data.message || "An error occurred during login.")
+        }
+      }
+    } catch (error) {
+      // console.error("Terjadi kesalahan:", error)
+      // setError("An error occurred while processing your request.")
+      if (error.response && error.response.status === 400) {
+        setError("Invalid username or password.")
+      } else {
+        console.error("Terjadi kesalahan:", error)
+        setError("An error occurred while processing your request.")
+      }
+    }
+  }
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
   return (
     <div className="overflow-hidden rounded-2xl">
-      <section className="bg-[#FEEBB2]-50 min-h-screen flex items-center justify-center">
-        <div className="bg-[#FEEBB2]-100 min-h-screen flex justify-center items-center h-screen">
+      <section className="bg-krem min-h-screen flex items-center justify-center">
+        <div className="min-h-screen flex justify-center items-center h-screen">
           <div className="md:block hidden w-1/2 h-full relative">
             <img
               src="quaso.jpeg"
@@ -24,10 +66,13 @@ const Login = () => {
             <div className="md:w-1/2 px-8 flex mx-auto">
               <div className="flex flex-col items-center justify-center h-screen">
                 <img src="https://i.imgur.com/MmbNAQd.png" alt="logomyroti" />
-                <h2 className="font-bold text-2xl mt-4">Welcome to My Roti!</h2>
+                <h2 className="font-bold text-2xl mt-4 text-center">
+                  Welcome to My Roti!
+                </h2>
                 <form
                   action=""
                   className="flex flex-col items-center mt-4 space-y-4"
+                  onSubmit={handleLogin}
                 >
                   <div className="w-full max-w-md">
                     <input
@@ -36,6 +81,8 @@ const Login = () => {
                       id="username"
                       placeholder="Username"
                       autoComplete="none"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
                   <div className="w-full max-w-md">
@@ -45,6 +92,8 @@ const Login = () => {
                         type={showPassword ? "text" : "password"}
                         id="password"
                         placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                       <i
                         className={`fa ${
@@ -54,6 +103,7 @@ const Login = () => {
                       ></i>
                     </div>
                   </div>
+                  {error && <div className="text-red-500 mt-2">{error}</div>}
                   <button className="bg-[#002D74] rounded-xl text-white py-2 px-5 w-full hover:scale-110 duration-300">
                     LOGIN
                   </button>
