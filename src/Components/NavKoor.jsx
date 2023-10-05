@@ -11,11 +11,11 @@ export default function NavKoor() {
   return (
     <>
       <nav
-        className={`fixed top-0 z-50 w-full bg-coklat-kuning border-gray-200 dark:bg-gray-800 dark:border-gray-700 ${
+        className={`fixed top-0 z-50 w-full bg-krem border-gray-200 dark:bg-gray-800 dark:border-gray-700 ${
           sidebarOpen ? "md:ml-64" : ""
         }`}
       >
-        <div className="px-3 py-3 lg:px-5 lg:pl-3">
+        <div className="px-3 py-5 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
               <button
@@ -108,7 +108,7 @@ export default function NavKoor() {
         }`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-coklat-kuning dark:bg-gray-800">
+        <div className="h-full px-3 pb-4 overflow-y-auto dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
               <a
