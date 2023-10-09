@@ -9,7 +9,7 @@ import KoordinatorCard from "./Components/KoordinatorCard"
 function App() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
       <Route path="/register" element={<Registration />} />
       <Route path="/navbar" element={<NavKoor />} />
       <Route path="/koordinator/product" element={<KoordinatorCard />} />
