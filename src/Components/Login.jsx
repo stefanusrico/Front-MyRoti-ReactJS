@@ -1,8 +1,6 @@
-import React from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "../Styles/Login.css"
-// import "@hookform/devstate"
 import axios from "axios"
 
 const Login = () => {
@@ -23,10 +21,18 @@ const Login = () => {
       console.log(response)
 
       if (response.data.success) {
+        const role = response.data.role // Mengambil role pengguna
         setUsername("")
         setPassword("")
         setError("")
-        navigate("/")
+
+        if (role === "Koordinator") {
+          navigate("/koordinator")
+        } else if (role === "Kurir") {
+          navigate("/kurir")
+        } else if (role === "Keuangan") {
+          navigate("/keuangan")
+        }
       } else {
         if (response.status === 400) {
           console.log("test gaming error")

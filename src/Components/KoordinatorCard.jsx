@@ -47,7 +47,7 @@ function KoordinatorCard() {
               Tambah Barang
             </Button>
           </div>
-          <div className="grid grid-cols-4 gap-4 mb-4 overflow-y-auto">
+          <div className="grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4  gap-4 mb-4 overflow-y-auto">
             <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-4">
               <a href="#">
                 <img
