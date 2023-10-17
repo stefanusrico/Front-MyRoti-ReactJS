@@ -18,7 +18,7 @@ function App() {
         path="/koordinator/pilih-kurir/:id"
         element={<KurirDistribusi />}
       />
-      <Route path="/koordinator/product" element={<KoordinatorLapak />} />
+      <Route path="/koordinator/lapak" element={<KoordinatorLapak />} />
     </Routes>
   )
 }
