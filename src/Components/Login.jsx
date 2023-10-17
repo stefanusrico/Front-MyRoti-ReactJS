@@ -42,8 +42,6 @@ const Login = () => {
         }
       }
     } catch (error) {
-      // console.error("Terjadi kesalahan:", error)
-      // setError("An error occurred while processing your request.")
       if (error.response && error.response.status === 400) {
         setError("Invalid username or password.")
       } else {

@@ -32,8 +32,8 @@ function App() {
       <Route path="/admin/data-koordinator" element={<DataKoordinator />} />
       <Route path="/admin/data-keuangan" element={<DataKeuangan />} />
       <Route path="/koordinator/product" element={<KoordinatorLapak />} />
-      <Route path="/post" element={<Distribusi />}/>
-      <Route path="/post/edit" element={<EditDistribusi />}/>
+      <Route path="/post" element={<Distribusi />} />
+      <Route path="/post/edit" element={<EditDistribusi />} />
     </Routes>
   )
 }

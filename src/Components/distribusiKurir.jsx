@@ -1,28 +1,27 @@
-import NavKoor from "./NavKoor";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Button } from "@material-tailwind/react";
-import profil from "../assets/profil.png";
-import { useNavigate } from "react-router-dom";
-// import LogoRoti from "../assets/LogoRoti.png"
+import NavKoor from "./NavKoor"
+import { useState, useEffect } from "react"
+import axios from "axios"
+import { Button } from "@material-tailwind/react"
+import profil from "../assets/profil.png"
+import { useNavigate } from "react-router-dom"
 
 function kurirDistribusi() {
-  const navigateTo = useNavigate();
-  const [cards, setCards] = useState([]);
+  const navigateTo = useNavigate()
+  const [cards, setCards] = useState([])
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/registrasi");
-      const userData = response.data;
-      setCards(userData);
+      const response = await axios.get("http://127.0.0.1:8000/api/registrasi")
+      const userData = response.data
+      setCards(userData)
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error)
     }
-  };
+  }
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData()
+  }, [])
 
   return (
     <>
@@ -73,7 +72,7 @@ function kurirDistribusi() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default kurirDistribusi;
+export default kurirDistribusi
