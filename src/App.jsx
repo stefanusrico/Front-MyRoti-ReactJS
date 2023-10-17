@@ -6,6 +6,8 @@ import NavKoor from "./Components/NavKoor"
 import KoordinatorLapak from "./Components/KoordinatorLapak"
 import LapakDistribusi from "./Components/LapakDistribusi"
 import KurirDistribusi from "./Components/KurirDistribusi"
+import DummyData from "./dummydata"
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         element={<KurirDistribusi />}
       />
       <Route path="/koordinator/lapak" element={<KoordinatorLapak />} />
+      <Route path="/kurir" element={<DummyData />} />
     </Routes>
   )
 }
