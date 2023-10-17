@@ -1,10 +1,30 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import { useTable } from "react-table"
-import NavAdmin from "./NavbarAdmin"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useTable, usePagination } from "react-table";
+import NavAdmin from "./NavbarAdmin";
+
+function PasswordCell({ password }) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <div>
+      {showPassword ? <span>{password}</span> : <span>*********</span>}
+      <i
+        className={`fa ${
+          showPassword ? "fa-eye-slash" : "fa-eye"
+        } ml-2 cursor-pointer`}
+        onClick={togglePasswordVisibility}
+      ></i>
+    </div>
+  );
+}
 
 function Kurir() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
   const columns = React.useMemo(
     () => [
       {
@@ -22,6 +42,7 @@ function Kurir() {
       {
         Header: "Password",
         accessor: "password",
+        Cell: ({ value }) => <PasswordCell password={value} />,
       },
       {
         Header: "Role",
@@ -30,29 +51,69 @@ function Kurir() {
       {
         Header: "Action",
         accessor: "",
+        Cell: ({ row }) => (
+          <button
+            onClick={() => handleDelete(row.original.id)}
+            className="text-red-500 cursor-pointer"
+          >
+            Delete
+          </button>
+        ),        
       },
     ],
     []
-  )
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
+  );
+
+  const handleDelete = async (id) => {
+    try {
+      // Make an HTTP request to delete the data based on the ID
+      await axios.delete(`http://127.0.0.1:8000/api/data-kurir/${id}`);
+      // After successful deletion, you may want to refresh the data in the table
+      getData();
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
+  };
+
+  // Define pagination options
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+  } = useTable(
+    {
       columns,
       data,
-    })
+      initialState: { pageIndex: 0, pageSize: 5 }, // Initial pagination state
+    },
+    usePagination
+  );
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/data-kurir")
-      const adminKurir = response.data
-      setData(adminKurir)
+      const response = await axios.get("http://127.0.0.1:8000/api/data-kurir");
+      const adminKurir = response.data;
+      setData(adminKurir);
     } catch (error) {
-      console.error("Error fetching data:", error)
+      console.error("Error fetching data:", error);
     }
-  }
+  };
+
   useEffect(() => {
-    getData()
-  }, [])
-  // Render the UI for your table
+    getData();
+  }, []);
+
   return (
     <>
       <NavAdmin />
@@ -74,7 +135,7 @@ function Kurir() {
                         {headerGroup.headers.map((column) => (
                           <th
                             scope="col"
-                            className="odd:bg-gray-700 even:bg-gray-800 px-16 py-6 text-left text-base font-medium text-white uppercase tracking-wider"
+                            className="px-16 py-6 text-left text-base font-medium text-white uppercase tracking-wider"
                             {...column.getHeaderProps()}
                           >
                             {column.render("Header")}
@@ -87,37 +148,116 @@ function Kurir() {
                     className="bg-light divide-y divide-gray-700"
                     {...getTableBodyProps()}
                   >
-                    {rows.map((row) => {
-                      prepareRow(row)
+                    {page.map((row) => {
+                      prepareRow(row);
                       return (
                         <tr
-                          key={row.id} // Tambahkan prop key dengan nilai unik, contohnya row.id
+                          key={row.id}
                           {...row.getRowProps()}
                           className="odd:bg-gray-700 even:bg-gray-800 text-white hover:bg-gray-600 hover:cursor-pointer focus:outline-none"
                         >
                           {row.cells.map((cell) => {
                             return (
                               <td
-                                key={cell.row.id + cell.column.id} // Tambahkan prop key dengan nilai unik
+                                key={cell.row.id + cell.column.id}
                                 className="px-16 py-6 whitespace-nowrap"
                                 {...cell.getCellProps()}
                               >
                                 {cell.render("Cell")}
                               </td>
-                            )
+                            );
                           })}
                         </tr>
-                      )
+                      );
                     })}
                   </tbody>
                 </table>
+                <div className="pagination flex items-center justify-center space-x-4 mt-4">
+                  <button
+                    onClick={() => gotoPage(0)}
+                    disabled={!canPreviousPage}
+                    className={`${
+                      !canPreviousPage
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-300"
+                    }`}
+                  >
+                    {"<<"}
+                  </button>{" "}
+                  <button
+                    onClick={() => previousPage()}
+                    disabled={!canPreviousPage}
+                    className={`${
+                      !canPreviousPage
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-300"
+                    }`}
+                  >
+                    {"<"}
+                  </button>{" "}
+                  <button
+                    onClick={() => nextPage()}
+                    disabled={!canNextPage}
+                    className={`${
+                      !canNextPage
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-300"
+                    }`}
+                  >
+                    {">"}
+                  </button>{" "}
+                  <button
+                    onClick={() => gotoPage(pageCount - 1)}
+                    disabled={!canNextPage}
+                    className={`${
+                      !canNextPage
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-300"
+                    }`}
+                  >
+                    {">>"}
+                  </button>{" "}
+                  <span>
+                    Page{" "}
+                    <strong>
+                      {pageIndex + 1} of {pageOptions.length}
+                    </strong>{" "}
+                  </span>
+                  <span>
+                    | Go to page:{" "}
+                    <input
+                      type="number"
+                      defaultValue={pageIndex + 1}
+                      onChange={(e) => {
+                        const page = e.target.value
+                          ? Number(e.target.value) - 1
+                          : 0;
+                        gotoPage(page);
+                      }}
+                      className="w-20 p-1 text-center border border-gray-400 rounded"
+                    />
+                  </span>{" "}
+                  <select
+                    value={pageSize}
+                    onChange={(e) => {
+                      setPageSize(Number(e.target.value));
+                    }}
+                    className="p-1 border border-gray-400 rounded"
+                  >
+                    {[5, 10, 15, 20, 30, 40, 50, 60].map((size) => (
+                      <option key={size} value={size}>
+                        Show {size}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Kurir
+export default Kurir;
