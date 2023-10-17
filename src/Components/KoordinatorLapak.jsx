@@ -155,76 +155,48 @@ function KoordinatorLapak() {
   return (
     <>
       <NavKoor />
-      <div className="p-20 sm:ml-64 scroll">
+      <div className="p-20 md:ml-48 scroll">
         <div className="p-10 border-2 border-gray-200 rounded-lg dark:border-gray-700">
           <div>
             <Button
               onClick={toggleFormVisibility}
               className="flex flex-row items-center p-3 gap-3 m-4 text-black bg-coklat-kuning border-4 hover-bg-slate-50 focus:ring-4 focus:outline focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
             >
-              <svg
-                fill="#000000"
-                height="20px"
-                width="20px"
-                version="1.1"
-                id="Capa_1"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 490 490"
-                xmlSpace="preserve"
-              >
-                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                ></g>
-                <g id="SVGRepo_iconCarrier">
-                  {" "}
-                  <g>
-                    {" "}
-                    <g>
-                      {" "}
-                      <g>
-                        {" "}
-                        <path d="M227.8,174.1v53.7h-53.7c-9.5,0-17.2,7.7-17.2,17.2s7.7,17.2,17.2,17.2h53.7v53.7c0,9.5,7.7,17.2,17.2,17.2 s17.1-7.7,17.1-17.2v-53.7h53.7c9.5,0,17.2-7.7,17.2-17.2s-7.7-17.2-17.2-17.2h-53.7v-53.7c0-9.5-7.7-17.2-17.1-17.2 S227.8,164.6,227.8,174.1z"></path>{" "}
-                        <path d="M71.7,71.7C25.5,118,0,179.5,0,245s25.5,127,71.8,173.3C118,464.5,179.6,490,245,490s127-25.5,173.3-71.8 C464.5,372,490,310.4,490,245s-25.5-127-71.8-173.3C372,25.5,310.5,0,245,0C179.6,0,118,25.5,71.7,71.7z M455.7,245 c0,56.3-21.9,109.2-61.7,149s-92.7,61.7-149,61.7S135.8,433.8,96,394s-61.7-92.7-61.7-149S56.2,135.8,96,96s92.7-61.7,149-61.7 S354.2,56.2,394,96S455.7,188.7,455.7,245z"></path>{" "}
-                      </g>{" "}
-                    </g>{" "}
-                    <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g>{" "}
-                    <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g>{" "}
-                    <g> </g> <g> </g> <g> </g>{" "}
-                  </g>{" "}
-                </g>
-              </svg>
-              Tambah Lapak
+              <ion-icon name="add-circle-outline"></ion-icon>
+              <span className="hidden sm:inline">Tambah Lapak</span>
             </Button>
           </div>
           {isFormVisible && (
             <form
               onSubmit={handleSubmit}
-              className="p-10 border-2 border-gray-200 rounded-lg dark:border-gray-700"
+              className="md:p-10 md:m-2 md:border-2 border-gray-200 rounded-lg dark:border-gray-700"
               action="POST"
             >
               <div>
                 <input
+                  className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
                   type="file"
                   name="image"
                   accept="image/*"
                   onChange={handleImage}
+                  disabled={editMode}
                 />
               </div>
               <div>
                 <input
+                  className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
                   type="text"
                   name="nama_warung"
                   placeholder="Nama Warung"
                   autoComplete="off"
                   value={formData.nama_warung}
                   onChange={handleInputChange}
+                  disabled={editMode}
                 />
               </div>
               <div>
                 <input
+                  className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
                   type="text"
                   name="alamat_warung"
                   placeholder="Alamat Warung"
@@ -235,6 +207,7 @@ function KoordinatorLapak() {
               </div>
               <div>
                 <input
+                  className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
                   type="text"
                   name="area"
                   placeholder="Area"
@@ -245,6 +218,7 @@ function KoordinatorLapak() {
               </div>
               <div>
                 <input
+                  className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
                   type="text"
                   name="contact_warung"
                   placeholder="Contact Person Warung"
@@ -279,13 +253,13 @@ function KoordinatorLapak() {
                       {card.nama_warung}
                     </h5>
                     <div className="flex items-center justify-between">
-                      <span className="text-xl font-light text-gray-900 dark:text-white">
-                        {card.area}
+                      <span className="text-sm font-light text-gray-900 dark:text-white">
+                        {card.alamat_warung}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-light text-gray-900 dark:text-white">
-                        {card.alamat_warung}
+                      <span className="text-xl font-light text-gray-900 dark:text-white">
+                        {card.area}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
@@ -296,15 +270,23 @@ function KoordinatorLapak() {
                     <div className="flex items-center justify-between mt-3">
                       <Button
                         onClick={() => editData(card)}
-                        className="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-bold py-2 px-8 rounded-full"
+                        className="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-bold md:py-2 md:px-8 rounded-full"
                       >
-                        Edit
+                        <ion-icon
+                          className="justify-center"
+                          name="create-outline"
+                        ></ion-icon>
+                        <span className="hidden sm:inline">Edit</span>
                       </Button>
                       <Button
                         onClick={() => deleteData(card.id)}
-                        className="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-6 rounded-full"
+                        className="bg-red-500 hover:bg-red-700 text-white text-sm font-bold md:py-2 md:px-6 rounded-full"
                       >
-                        Delete
+                        <ion-icon
+                          className="justfy-center"
+                          name="trash-outline"
+                        ></ion-icon>
+                        <span className="hidden sm:inline">Delete</span>
                       </Button>
                     </div>
                   </div>
