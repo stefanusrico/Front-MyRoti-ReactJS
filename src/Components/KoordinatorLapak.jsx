@@ -155,8 +155,8 @@ function KoordinatorLapak() {
   return (
     <>
       <NavKoor />
-      <div className="p-20 md:ml-48 scroll">
-        <div className="p-10 border-2 border-gray-200 rounded-lg dark:border-gray-700">
+      <div className="md:p-20 md:pt-20 md:pb-52 md:ml-48 scroll max-h-[100vh] overflow-y-auto">
+        <div className="p-16 border-2 bg-gray-100 border-gray-400 rounded-lg dark:border-gray-700 ">
           <div>
             <Button
               onClick={toggleFormVisibility}
@@ -169,7 +169,7 @@ function KoordinatorLapak() {
           {isFormVisible && (
             <form
               onSubmit={handleSubmit}
-              className="md:p-10 md:m-2 md:border-2 border-gray-200 rounded-lg dark:border-gray-700"
+              className="md:p-10 md:m-2 md:border-2 bg-gray-100 border-gray-200 rounded-lg dark:border-gray-700"
               action="POST"
             >
               <div>
@@ -237,11 +237,11 @@ function KoordinatorLapak() {
           )}
           {/* Daftar produk lainnya */}
           {cards.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4 overflow-y-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {cards.map((card, index) => (
                 <div
                   key={index}
-                  className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                  className="w-full max-w-sm bg-white border border-gray-700 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
                 >
                   <img
                     className="p-8 rounded-t-lg object-cover h-60 w-96"
@@ -270,7 +270,7 @@ function KoordinatorLapak() {
                     <div className="flex items-center justify-between mt-3">
                       <Button
                         onClick={() => editData(card)}
-                        className="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-bold md:py-2 md:px-8 rounded-full"
+                        className="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-bold md:py-2 md:px-4 rounded-full"
                       >
                         <ion-icon
                           className="justify-center"
@@ -280,7 +280,7 @@ function KoordinatorLapak() {
                       </Button>
                       <Button
                         onClick={() => deleteData(card.id)}
-                        className="bg-red-500 hover:bg-red-700 text-white text-sm font-bold md:py-2 md:px-6 rounded-full"
+                        className="bg-red-500 hover:bg-red-700 text-white text-sm font-bold md:py-2 md:px-4 rounded-full"
                       >
                         <ion-icon
                           className="justfy-center"
