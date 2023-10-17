@@ -6,22 +6,29 @@ import NavKoor from "./Components/NavKoor"
 import KoordinatorLapak from "./Components/KoordinatorLapak"
 import LapakDistribusi from "./Components/LapakDistribusi"
 import KurirDistribusi from "./Components/KurirDistribusi"
-import DummyData from "./dummydata"
-
+import DataKurir from "./Components/DataKurir"
+import DataKoordinator from "./Components/DataKoordinator"
+import DataKeuangan from "./Components/DataKeuangan"
 
 function App() {
   return (
     <Routes>
+      {/* Auth */}
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Registration />} />
+      {/* Navbar */}
       <Route path="/navbar" element={<NavKoor />} />
+      {/* Koordinator */}
       <Route path="/koordinator/distribusi" element={<LapakDistribusi />} />
       <Route
         path="/koordinator/pilih-kurir/:id"
         element={<KurirDistribusi />}
       />
       <Route path="/koordinator/lapak" element={<KoordinatorLapak />} />
-      <Route path="/kurir" element={<DummyData />} />
+      {/* Admin */}
+      <Route path="/admin/data-kurir" element={<DataKurir />} />
+      <Route path="/admin/data-koordinator" element={<DataKoordinator />} />
+      <Route path="/admin/data-keuangan" element={<DataKeuangan />} />
     </Routes>
   )
 }
