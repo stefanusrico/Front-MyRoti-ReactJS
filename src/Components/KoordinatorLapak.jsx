@@ -6,7 +6,7 @@ import gambarWarung from "../assets/gambarwarung.jpg"
 
 function KoordinatorLapak() {
   const [isFormVisible, setFormVisible] = useState(false)
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(false)
   const [formData, setFormData] = useState({
     // image: "",
     nama_warung: "",
@@ -63,20 +63,18 @@ function KoordinatorLapak() {
   }
 
   const editData = (data) => {
-    setEditMode(true);
-    setEditFormData(data);
+    setEditMode(true)
+    setEditFormData(data)
     setFormData({
       nama_warung: data.nama_warung,
       area: data.area,
       alamat_warung: data.alamat_warung,
       contact_warung: data.contact_warung,
-    });
-    toggleFormVisibility();
-  };
-  
+    })
+    toggleFormVisibility()
+  }
 
-
-  const [editFormData, setEditFormData] = useState(null);
+  const [editFormData, setEditFormData] = useState(null)
 
   const handleEdit = async () => {
     try {
@@ -84,56 +82,55 @@ function KoordinatorLapak() {
         const response = await axios.put(
           `http://127.0.0.1:8000/api/lapak/${editFormData.id}`,
           formData // Menggunakan formData untuk mengirim data yang diperbarui
-        );
+        )
 
         // Dapatkan data terbaru setelah mengedit data
-        getData();
+        getData()
 
         // Reset formulir
-        setEditFormData(null);
+        setEditFormData(null)
         setFormData({
           nama_warung: "",
           area: "",
           alamat_warung: "",
           contact_warung: "",
-        });
+        })
 
         // Sembunyikan formulir
-        toggleFormVisibility();
+        toggleFormVisibility()
         setEditMode(false)
       } else {
-        console.error("Tidak ada data yang akan diubah.");
+        console.error("Tidak ada data yang akan diubah.")
       }
     } catch (error) {
-      console.error("Error updating data:", error);
+      console.error("Error updating data:", error)
     }
-
-  };
-
+  }
 
   const deleteData = async (id) => {
     try {
-      const response = await axios.delete(`http://127.0.0.1:8000/api/lapak/${id}`);
+      const response = await axios.delete(
+        `http://127.0.0.1:8000/api/lapak/${id}`
+      )
       // Dapatkan data terbaru setelah menghapus data
-      getData();
+      getData()
     } catch (error) {
-      console.error("Error deleting data:", error);
+      console.error("Error deleting data:", error)
     }
-  };
+  }
 
   useEffect(() => {
     getData()
   }, [])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (editMode) {
-      handleEdit();
+      handleEdit()
     } else {
-      addData();
+      addData()
     }
-  };
-  
+  }
 
   return (
     <>
@@ -233,10 +230,10 @@ function KoordinatorLapak() {
                 />
               </div>
               <button
-                  className="bg-transparant hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-2 mt-2 border border-blue-500 hover:border-transparent rounded-full"
-                  type="submit"
-                >
-                  {editMode ? "Update" : "Simpan"}
+                className="bg-transparant hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-2 mt-2 border border-blue-500 hover:border-transparent rounded-full"
+                type="submit"
+              >
+                {editMode ? "Update" : "Simpan"}
               </button>
             </form>
           )}
@@ -273,12 +270,16 @@ function KoordinatorLapak() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between mt-3">
-                      <Button onClick={() => editData(card)}
-                        className="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-bold py-2 px-8 rounded-full">
+                      <Button
+                        onClick={() => editData(card)}
+                        className="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-bold py-2 px-8 rounded-full"
+                      >
                         Edit
                       </Button>
-                      <Button onClick={() => deleteData(card.id)}
-                        className="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-6 rounded-full">
+                      <Button
+                        onClick={() => deleteData(card.id)}
+                        className="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-6 rounded-full"
+                      >
                         Delete
                       </Button>
                     </div>
