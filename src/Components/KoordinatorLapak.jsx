@@ -2,13 +2,14 @@ import NavKoor from "./NavKoor"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { Button } from "@material-tailwind/react"
-import gambarWarung from "../assets/gambarwarung.jpg"
+// import gambarWarung from "../assets/gambarwarung.jpg"
 
 function KoordinatorLapak() {
   const [isFormVisible, setFormVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(null)
   const [formData, setFormData] = useState({
-    // image: "",
+    image: null,
     nama_warung: "",
     area: "",
     alamat_warung: "",
@@ -27,10 +28,23 @@ function KoordinatorLapak() {
 
   const addData = async () => {
     try {
+      const data = new FormData()
+      data.append("image", selectedImage)
+      data.append("nama_warung", formData.nama_warung)
+      data.append("area", formData.area)
+      data.append("alamat_warung", formData.alamat_warung)
+      data.append("contact_warung", formData.contact_warung)
+
       const response = await axios.post(
         "http://127.0.0.1:8000/api/lapak",
-        formData
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       )
+
       console.log("Data berhasil ditambahkan:", response.data)
 
       // Ambil data terbaru setelah menambahkan data
@@ -38,7 +52,7 @@ function KoordinatorLapak() {
 
       // Reset formulir
       setFormData({
-        // image: "",
+        image: null,
         nama_warung: "",
         area: "",
         alamat_warung: "",
@@ -50,6 +64,11 @@ function KoordinatorLapak() {
     } catch (error) {
       console.error("Error adding data:", error)
     }
+  }
+
+  const handleImage = (e) => {
+    const file = e.target.files[0]
+    setSelectedImage(file)
   }
 
   const getData = async () => {
@@ -90,6 +109,7 @@ function KoordinatorLapak() {
         // Reset formulir
         setEditFormData(null)
         setFormData({
+          image: "",
           nama_warung: "",
           area: "",
           alamat_warung: "",
@@ -185,19 +205,20 @@ function KoordinatorLapak() {
               className="p-10 border-2 border-gray-200 rounded-lg dark:border-gray-700"
               action="POST"
             >
-              {/* <div>
+              <div>
                 <input
                   type="file"
                   name="image"
                   accept="image/*"
-                  onChange={handleInputChange}
+                  onChange={handleImage}
                 />
-              </div> */}
+              </div>
               <div>
                 <input
                   type="text"
                   name="nama_warung"
                   placeholder="Nama Warung"
+                  autoComplete="off"
                   value={formData.nama_warung}
                   onChange={handleInputChange}
                 />
@@ -207,6 +228,7 @@ function KoordinatorLapak() {
                   type="text"
                   name="alamat_warung"
                   placeholder="Alamat Warung"
+                  autoComplete="off"
                   value={formData.alamat_warung}
                   onChange={handleInputChange}
                 />
@@ -216,6 +238,7 @@ function KoordinatorLapak() {
                   type="text"
                   name="area"
                   placeholder="Area"
+                  autoComplete="off"
                   value={formData.area}
                   onChange={handleInputChange}
                 />
@@ -225,6 +248,7 @@ function KoordinatorLapak() {
                   type="text"
                   name="contact_warung"
                   placeholder="Contact Person Warung"
+                  autoComplete="off"
                   value={formData.contact_warung}
                   onChange={handleInputChange}
                 />
@@ -246,8 +270,8 @@ function KoordinatorLapak() {
                   className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
                 >
                   <img
-                    className="p-8 rounded-t-lg"
-                    src={gambarWarung}
+                    className="p-8 rounded-t-lg object-cover h-60 w-96"
+                    src={card.image}
                     alt="product image"
                   />
                   <div className="px-5 pb-5">
