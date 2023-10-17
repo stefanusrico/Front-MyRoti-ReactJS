@@ -6,6 +6,7 @@ import gambarWarung from "../assets/gambarwarung.jpg"
 
 function KoordinatorLapak() {
   const [isFormVisible, setFormVisible] = useState(false)
+  const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     // image: "",
     nama_warung: "",
@@ -61,14 +62,78 @@ function KoordinatorLapak() {
     }
   }
 
+  const editData = (data) => {
+    setEditMode(true);
+    setEditFormData(data);
+    setFormData({
+      nama_warung: data.nama_warung,
+      area: data.area,
+      alamat_warung: data.alamat_warung,
+      contact_warung: data.contact_warung,
+    });
+    toggleFormVisibility();
+  };
+  
+
+
+  const [editFormData, setEditFormData] = useState(null);
+
+  const handleEdit = async () => {
+    try {
+      if (editFormData) {
+        const response = await axios.put(
+          `http://127.0.0.1:8000/api/lapak/${editFormData.id}`,
+          formData // Menggunakan formData untuk mengirim data yang diperbarui
+        );
+
+        // Dapatkan data terbaru setelah mengedit data
+        getData();
+
+        // Reset formulir
+        setEditFormData(null);
+        setFormData({
+          nama_warung: "",
+          area: "",
+          alamat_warung: "",
+          contact_warung: "",
+        });
+
+        // Sembunyikan formulir
+        toggleFormVisibility();
+        setEditMode(false)
+      } else {
+        console.error("Tidak ada data yang akan diubah.");
+      }
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+
+  };
+
+
+  const deleteData = async (id) => {
+    try {
+      const response = await axios.delete(`http://127.0.0.1:8000/api/lapak/${id}`);
+      // Dapatkan data terbaru setelah menghapus data
+      getData();
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
+  };
+
   useEffect(() => {
     getData()
   }, [])
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    addData()
-  }
+    e.preventDefault();
+    if (editMode) {
+      handleEdit();
+    } else {
+      addData();
+    }
+  };
+  
 
   return (
     <>
@@ -168,10 +233,10 @@ function KoordinatorLapak() {
                 />
               </div>
               <button
-                className="bg-transparent hover.bg-blue-500 text-blue-700 font-semibold hover.text-white py-2 px-2 mt-2 border border-blue-500 hover.border-transparent rounded"
-                type="submit"
-              >
-                Simpan
+                  className="bg-transparant hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-2 mt-2 border border-blue-500 hover:border-transparent rounded-full"
+                  type="submit"
+                >
+                  {editMode ? "Update" : "Simpan"}
               </button>
             </form>
           )}
@@ -189,7 +254,7 @@ function KoordinatorLapak() {
                     alt="product image"
                   />
                   <div className="px-5 pb-5">
-                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                    <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                       {card.nama_warung}
                     </h5>
                     <div className="flex items-center justify-between">
@@ -198,20 +263,22 @@ function KoordinatorLapak() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xl font-light text-gray-900 dark:text-white">
+                      <span className="text-sm font-light text-gray-900 dark:text-white">
                         {card.alamat_warung}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xl font-light text-gray-900 dark:text-white">
+                      <span className="text-l font-light text-gray-900 dark:text-white">
                         {card.contact_warung}
                       </span>
                     </div>
                     <div className="flex items-center justify-between mt-3">
-                      <Button className="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-bold py-2 px-8 rounded-full">
+                      <Button onClick={() => editData(card)}
+                        className="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-bold py-2 px-8 rounded-full">
                         Edit
                       </Button>
-                      <Button className="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-6 rounded-full">
+                      <Button onClick={() => deleteData(card.id)}
+                        className="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-6 rounded-full">
                         Delete
                       </Button>
                     </div>
