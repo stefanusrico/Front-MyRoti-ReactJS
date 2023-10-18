@@ -11,6 +11,7 @@ import DataKoordinator from "./Components/DataKoordinator"
 import DataKeuangan from "./Components/DataKeuangan"
 import Distribusi from "./Components/distribusiKurir"
 import EditDistribusi from "./Components/editDistribusi"
+import NavAdmin from "./Components/NavbarAdmin"
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       />
       <Route path="/koordinator/lapak" element={<KoordinatorLapak />} />
       {/* Admin */}
+      <Route path="/admin/dashboard" element={<NavAdmin />} />
       <Route path="/admin/data-kurir" element={<DataKurir />} />
       <Route path="/admin/data-koordinator" element={<DataKoordinator />} />
       <Route path="/admin/data-keuangan" element={<DataKeuangan />} />

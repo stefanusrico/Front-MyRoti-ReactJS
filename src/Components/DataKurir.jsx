@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useTable, usePagination } from "react-table";
-import NavAdmin from "./NavbarAdmin";
+import React, { useEffect, useState } from "react"
+import axios from "axios"
+import { useTable, usePagination } from "react-table"
+import NavAdmin from "./NavbarAdmin"
 
 function PasswordCell({ password }) {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   return (
     <div>
@@ -20,11 +20,11 @@ function PasswordCell({ password }) {
         onClick={togglePasswordVisibility}
       ></i>
     </div>
-  );
+  )
 }
 
 function Kurir() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([])
   const columns = React.useMemo(
     () => [
       {
@@ -58,22 +58,22 @@ function Kurir() {
           >
             Delete
           </button>
-        ),        
+        ),
       },
     ],
     []
-  );
+  )
 
   const handleDelete = async (id) => {
     try {
       // Make an HTTP request to delete the data based on the ID
-      await axios.delete(`http://127.0.0.1:8000/api/data-kurir/${id}`);
+      await axios.delete(`http://127.0.0.1:8000/api/data-kurir/${id}`)
       // After successful deletion, you may want to refresh the data in the table
-      getData();
+      getData()
     } catch (error) {
-      console.error("Error deleting data:", error);
+      console.error("Error deleting data:", error)
     }
-  };
+  }
 
   // Define pagination options
   const {
@@ -98,21 +98,21 @@ function Kurir() {
       initialState: { pageIndex: 0, pageSize: 5 }, // Initial pagination state
     },
     usePagination
-  );
+  )
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/data-kurir");
-      const adminKurir = response.data;
-      setData(adminKurir);
+      const response = await axios.get("http://127.0.0.1:8000/api/data-kurir")
+      const adminKurir = response.data
+      setData(adminKurir)
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error)
     }
-  };
+  }
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData()
+  }, [])
 
   return (
     <>
@@ -135,7 +135,7 @@ function Kurir() {
                         {headerGroup.headers.map((column) => (
                           <th
                             scope="col"
-                            className="px-16 py-6 text-left text-base font-medium text-white uppercase tracking-wider"
+                            className="odd:bg-gray-700 even:bg-gray-800 px-16 py-6 text-left text-base font-medium text-white uppercase tracking-wider"
                             {...column.getHeaderProps()}
                           >
                             {column.render("Header")}
@@ -149,7 +149,7 @@ function Kurir() {
                     {...getTableBodyProps()}
                   >
                     {page.map((row) => {
-                      prepareRow(row);
+                      prepareRow(row)
                       return (
                         <tr
                           key={row.id}
@@ -165,10 +165,10 @@ function Kurir() {
                               >
                                 {cell.render("Cell")}
                               </td>
-                            );
+                            )
                           })}
                         </tr>
-                      );
+                      )
                     })}
                   </tbody>
                 </table>
@@ -231,8 +231,8 @@ function Kurir() {
                       onChange={(e) => {
                         const page = e.target.value
                           ? Number(e.target.value) - 1
-                          : 0;
-                        gotoPage(page);
+                          : 0
+                        gotoPage(page)
                       }}
                       className="w-20 p-1 text-center border border-gray-400 rounded"
                     />
@@ -240,7 +240,7 @@ function Kurir() {
                   <select
                     value={pageSize}
                     onChange={(e) => {
-                      setPageSize(Number(e.target.value));
+                      setPageSize(Number(e.target.value))
                     }}
                     className="p-1 border border-gray-400 rounded"
                   >
@@ -257,7 +257,7 @@ function Kurir() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default Kurir;
+export default Kurir

@@ -27,11 +27,13 @@ const Login = () => {
         setError("")
 
         if (role === "Koordinator") {
-          navigate("/koordinator")
+          navigate("/koordinator/lapak")
         } else if (role === "Kurir") {
           navigate("/kurir")
         } else if (role === "Keuangan") {
           navigate("/keuangan")
+        } else if (role === "Admin") {
+          navigate("/admin/dashboard")
         }
       } else {
         if (response.status === 400) {

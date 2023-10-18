@@ -130,7 +130,7 @@ export default function NavKoor() {
             </li>
             <li>
               <a
-                href="/post"
+                href="/koordinator/distribusi"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -149,7 +149,7 @@ export default function NavKoor() {
             </li>
             <li>
               <a
-                href="/koordinator/distribusi"
+                href="/koordinator/lapak"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -166,7 +166,7 @@ export default function NavKoor() {
             </li>
             <li>
               <a
-                href="#"
+                href="/koordinator/product"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
