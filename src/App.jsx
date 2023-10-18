@@ -12,6 +12,7 @@ import DataKeuangan from "./Components/DataKeuangan"
 import Distribusi from "./Components/distribusiKurir"
 import EditDistribusi from "./Components/editDistribusi"
 import NavAdmin from "./Components/NavbarAdmin"
+import KoordinatorProduct from "./Components/KoordinatorProduk"
 
 function App() {
   return (
@@ -28,12 +29,12 @@ function App() {
         element={<KurirDistribusi />}
       />
       <Route path="/koordinator/lapak" element={<KoordinatorLapak />} />
+      <Route path="/koordinator/product" element={<KoordinatorProduct />} />
       {/* Admin */}
       <Route path="/admin/dashboard" element={<NavAdmin />} />
       <Route path="/admin/data-kurir" element={<DataKurir />} />
       <Route path="/admin/data-koordinator" element={<DataKoordinator />} />
       <Route path="/admin/data-keuangan" element={<DataKeuangan />} />
-      <Route path="/koordinator/product" element={<KoordinatorLapak />} />
       <Route path="/post" element={<Distribusi />} />
       <Route path="/post/edit" element={<EditDistribusi />} />
     </Routes>
