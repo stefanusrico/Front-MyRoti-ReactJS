@@ -2,7 +2,7 @@ import NavKoor from "./NavKoor"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { Button } from "@material-tailwind/react"
-// import gambarWarung from "../assets/gambarwarung.jpg"
+// import gambarlapak from "../assets/gambarlapak.jpg"
 
 function KoordinatorLapak() {
   const [isFormVisible, setFormVisible] = useState(false)
@@ -10,10 +10,10 @@ function KoordinatorLapak() {
   const [selectedImage, setSelectedImage] = useState(null)
   const [formData, setFormData] = useState({
     image: null,
-    nama_warung: "",
+    nama_lapak: "",
     area: "",
-    alamat_warung: "",
-    contact_warung: "",
+    alamat_lapak: "",
+    contact_lapak: "",
   })
   const [cards, setCards] = useState([])
 
@@ -30,10 +30,10 @@ function KoordinatorLapak() {
     try {
       const data = new FormData()
       data.append("image", selectedImage)
-      data.append("nama_warung", formData.nama_warung)
+      data.append("nama_lapak", formData.nama_lapak)
       data.append("area", formData.area)
-      data.append("alamat_warung", formData.alamat_warung)
-      data.append("contact_warung", formData.contact_warung)
+      data.append("alamat_lapak", formData.alamat_lapak)
+      data.append("contact_lapak", formData.contact_lapak)
 
       const response = await axios.post(
         "http://127.0.0.1:8000/api/lapak",
@@ -53,10 +53,10 @@ function KoordinatorLapak() {
       // Reset formulir
       setFormData({
         image: null,
-        nama_warung: "",
+        nama_lapak: "",
         area: "",
-        alamat_warung: "",
-        contact_warung: "",
+        alamat_lapak: "",
+        contact_lapak: "",
       })
 
       // Sembunyikan formulir
@@ -85,10 +85,10 @@ function KoordinatorLapak() {
     setEditMode(true)
     setEditFormData(data)
     setFormData({
-      nama_warung: data.nama_warung,
+      nama_lapak: data.nama_lapak,
       area: data.area,
-      alamat_warung: data.alamat_warung,
-      contact_warung: data.contact_warung,
+      alamat_lapak: data.alamat_lapak,
+      contact_lapak: data.contact_lapak,
     })
     toggleFormVisibility()
   }
@@ -110,10 +110,10 @@ function KoordinatorLapak() {
         setEditFormData(null)
         setFormData({
           image: "",
-          nama_warung: "",
+          nama_lapak: "",
           area: "",
-          alamat_warung: "",
-          contact_warung: "",
+          alamat_lapak: "",
+          contact_lapak: "",
         })
 
         // Sembunyikan formulir
@@ -186,10 +186,10 @@ function KoordinatorLapak() {
                 <input
                   className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
                   type="text"
-                  name="nama_warung"
-                  placeholder="Nama Warung"
+                  name="nama_lapak"
+                  placeholder="Nama lapak"
                   autoComplete="off"
-                  value={formData.nama_warung}
+                  value={formData.nama_lapak}
                   onChange={handleInputChange}
                   disabled={editMode}
                 />
@@ -198,10 +198,10 @@ function KoordinatorLapak() {
                 <input
                   className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
                   type="text"
-                  name="alamat_warung"
-                  placeholder="Alamat Warung"
+                  name="alamat_lapak"
+                  placeholder="Alamat lapak"
                   autoComplete="off"
-                  value={formData.alamat_warung}
+                  value={formData.alamat_lapak}
                   onChange={handleInputChange}
                 />
               </div>
@@ -220,10 +220,10 @@ function KoordinatorLapak() {
                 <input
                   className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
                   type="text"
-                  name="contact_warung"
-                  placeholder="Contact Person Warung"
+                  name="contact_lapak"
+                  placeholder="Contact Person lapak"
                   autoComplete="off"
-                  value={formData.contact_warung}
+                  value={formData.contact_lapak}
                   onChange={handleInputChange}
                 />
               </div>
@@ -250,11 +250,11 @@ function KoordinatorLapak() {
                   />
                   <div className="px-5 pb-5">
                     <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                      {card.nama_warung}
+                      {card.nama_lapak}
                     </h5>
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-light text-gray-900 dark:text-white">
-                        {card.alamat_warung}
+                        {card.alamat_lapak}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
@@ -264,7 +264,7 @@ function KoordinatorLapak() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-l font-light text-gray-900 dark:text-white">
-                        {card.contact_warung}
+                        {card.contact_lapak}
                       </span>
                     </div>
                     <div className="flex items-center justify-between mt-3">

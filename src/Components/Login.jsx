@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import "../Styles/Login.css"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
-  const navigate = useNavigate()
+  const navigate = useNavigate() // Inisialisasi useHistory
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -18,30 +18,24 @@ const Login = () => {
         username: username,
         password: password,
       })
-      console.log(response)
 
-      if (response.data.success) {
-        const role = response.data.role // Mengambil role pengguna
+      if (response.status === 200) {
         setUsername("")
         setPassword("")
         setError("")
 
-        if (role === "Koordinator") {
+        // Redirect user based on their role
+        if (response.data.user.role === "Koordinator") {
           navigate("/koordinator/lapak")
-        } else if (role === "Kurir") {
+        } else if (response.data.user.role === "Kurir") {
           navigate("/kurir")
-        } else if (role === "Keuangan") {
+        } else if (response.data.user.role === "Keuangan") {
           navigate("/keuangan")
-        } else if (role === "Admin") {
+        } else if (response.data.user.role === "Admin") {
           navigate("/admin/dashboard")
         }
       } else {
-        if (response.status === 400) {
-          console.log("test gaming error")
-          setError("Invalid username or password.")
-        } else {
-          setError(response.data.message || "An error occurred during login.")
-        }
+        setError("Invalid username or password.")
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
