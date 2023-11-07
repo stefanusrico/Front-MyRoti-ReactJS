@@ -3,7 +3,7 @@ import axios from "axios"
 import { useTable } from "react-table"
 import NavAdmin from "./NavbarAdmin"
 
-function Kurir() {
+function DataKoordinator() {
   const [data, setData] = useState([])
   const columns = React.useMemo(
     () => [
@@ -12,20 +12,20 @@ function Kurir() {
         accessor: "id",
       },
       {
-        Header: "Nama Kurir",
-        accessor: "name",
+        Header: "Nama Koordinator",
+        accessor: "nama_koordinator",
       },
       {
         Header: "Username",
-        accessor: "username",
+        accessor: "user.username", // Akses username dari relasi user
       },
       {
         Header: "Password",
-        accessor: "password",
+        accessor: "user.password", // Akses password dari relasi user
       },
       {
         Header: "Role",
-        accessor: "role",
+        accessor: "user.role", // Akses role dari relasi user
       },
       {
         Header: "Action",
@@ -34,6 +34,7 @@ function Kurir() {
     ],
     []
   )
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -45,16 +46,18 @@ function Kurir() {
       const response = await axios.get(
         "http://127.0.0.1:8000/api/data-koordinator"
       )
-      const adminKurir = response.data
-      setData(adminKurir)
+      const adminKoordinator = response.data
+      console.log(adminKoordinator)
+      setData(adminKoordinator)
     } catch (error) {
-      console.error("Error fetching data:", error)
+      console.error("Error fetching data:", error.message)
     }
   }
+
   useEffect(() => {
     getData()
   }, [])
-  // Render the UI for your table
+
   return (
     <>
       <NavAdmin />
@@ -93,18 +96,30 @@ function Kurir() {
                       prepareRow(row)
                       return (
                         <tr
-                          key={row.id} // Tambahkan prop key dengan nilai unik, contohnya row.id
+                          key={row.id}
                           {...row.getRowProps()}
                           className="odd:bg-gray-700 even:bg-gray-800 text-white hover:bg-gray-600 hover:cursor-pointer focus:outline-none"
                         >
                           {row.cells.map((cell) => {
                             return (
                               <td
-                                key={cell.row.id + cell.column.id} // Tambahkan prop key dengan nilai unik
+                                key={cell.column.id}
                                 className="px-16 py-6 whitespace-nowrap"
                                 {...cell.getCellProps()}
                               >
-                                {cell.render("Cell")}
+                                {cell.column.id === "user.username"
+                                  ? cell.row.original.user
+                                    ? cell.row.original.user.username
+                                    : ""
+                                  : cell.column.id === "user.password"
+                                  ? cell.row.original.user
+                                    ? cell.row.original.user.password
+                                    : ""
+                                  : cell.column.id === "user.role"
+                                  ? cell.row.original.user
+                                    ? cell.row.original.user.role
+                                    : ""
+                                  : cell.render("Cell")}
                               </td>
                             )
                           })}
@@ -122,4 +137,4 @@ function Kurir() {
   )
 }
 
-export default Kurir
+export default DataKoordinator
