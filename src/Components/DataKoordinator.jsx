@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { useTable } from "react-table"
 import NavAdmin from "./NavbarAdmin"
+import { Link } from "react-router-dom"
 
 function DataKoordinator() {
   const [data, setData] = useState([])
@@ -13,23 +14,35 @@ function DataKoordinator() {
       },
       {
         Header: "Nama Koordinator",
-        accessor: "nama_koordinator",
+        accessor: "name",
       },
       {
         Header: "Username",
-        accessor: "user.username", // Akses username dari relasi user
+        accessor: "username", // Akses username dari relasi user
       },
       {
         Header: "Password",
-        accessor: "user.password", // Akses password dari relasi user
+        accessor: "password", // Akses password dari relasi user
       },
       {
         Header: "Role",
-        accessor: "user.role", // Akses role dari relasi user
+        accessor: "role", // Akses role dari relasi user
       },
       {
         Header: "Action",
         accessor: "",
+        Cell: ({ row }) => (
+          <>
+            <div className="flex justify-between">
+              <Link to={`/edit/${row.original.id}`}>Edit</Link>
+              <Link>
+                <button onClick={() => handleDelete(row.original.id)}>
+                  Delete
+                </button>
+              </Link>
+            </div>
+          </>
+        ),
       },
     ],
     []
@@ -51,6 +64,32 @@ function DataKoordinator() {
       setData(adminKoordinator)
     } catch (error) {
       console.error("Error fetching data:", error.message)
+    }
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      // Make an HTTP request to delete the data based on the ID
+      await axios.delete(`http://127.0.0.1:8000/api/data-koordinator/${id}`)
+      // After successful deletion, you may want to refresh the data in the table
+      getData()
+    } catch (error) {
+      console.error("Error deleting data:", error)
+    }
+  }
+
+  const navigateEdit = (id) => {
+    window.location.href = `admin/dashboard/${id}`
+  }
+
+  const handleUpdate = async (id) => {
+    try {
+      // Make an HTTP request to delete the data based on the ID
+      await axios.put(`http://127.0.0.1:8000/api/data-koordinator/${id}`)
+      // After successful deletion, you may want to refresh the data in the table
+      getData()
+    } catch (error) {
+      console.error("Error updating data:", error)
     }
   }
 

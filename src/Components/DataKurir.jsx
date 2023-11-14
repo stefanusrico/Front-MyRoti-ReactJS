@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { useTable, usePagination } from "react-table"
 import NavAdmin from "./NavbarAdmin"
+import { Link } from "react-router-dom"
 
 function PasswordCell({ password }) {
   const [showPassword, setShowPassword] = useState(false)
+  // const history = useHistory()
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -33,31 +35,35 @@ function DataKurir() {
       },
       {
         Header: "Nama Kurir",
-        accessor: "nama_kurir",
+        accessor: "name",
       },
       {
         Header: "Username",
-        accessor: "user.username",
+        accessor: "username",
       },
       {
         Header: "Password",
-        accessor: "user.password",
+        accessor: "password",
         Cell: ({ value }) => <PasswordCell password={value} />,
       },
       {
         Header: "Role",
-        accessor: "user.role",
+        accessor: "role",
       },
       {
         Header: "Action",
         accessor: "",
         Cell: ({ row }) => (
-          <button
-            onClick={() => handleDelete(row.original.id)}
-            className="text-red-500 cursor-pointer"
-          >
-            Delete
-          </button>
+          <>
+            <div className="flex justify-between">
+              <Link to={`/edit-kurir/${row.original.id}`}>Edit</Link>
+              <Link>
+                <button onClick={() => handleDelete(row.original.id)}>
+                  Delete
+                </button>
+              </Link>
+            </div>
+          </>
         ),
       },
     ],
@@ -72,6 +78,17 @@ function DataKurir() {
       getData()
     } catch (error) {
       console.error("Error deleting data:", error)
+    }
+  }
+
+  const handleUpdate = async (id) => {
+    try {
+      // Make an HTTP request to delete the data based on the ID
+      await axios.put(`http://127.0.0.1:8000/api/update-kurir/${id}`)
+      // After successful deletion, you may want to refresh the data in the table
+      getData()
+    } catch (error) {
+      console.error("Error updating data:", error)
     }
   }
 
@@ -103,6 +120,7 @@ function DataKurir() {
   const getData = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/data-kurir")
+      console.log(response)
       const adminKurir = response.data
       setData(adminKurir)
     } catch (error) {
@@ -154,7 +172,8 @@ function DataKurir() {
                         <tr
                           key={row.id}
                           {...row.getRowProps()}
-                          className="odd:bg-gray-700 even:bg-gray-800 text-white hover:bg-gray-600 hover:cursor-pointer focus:outline-none"
+                          className="odd:bg-gray-700 even:bg-gray-800 text-white hover:bg-gray-600 focus:outline-none"
+                          style={{ cursor: "auto" }} // Set the cursor style to 'auto'
                         >
                           {row.cells.map((cell) => {
                             return (

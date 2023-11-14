@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { useTable } from "react-table"
 import NavAdmin from "./NavbarAdmin"
+import { Link } from "react-router-dom"
 
 function DataKeuangan() {
   const [data, setData] = useState([])
@@ -13,23 +14,39 @@ function DataKeuangan() {
       },
       {
         Header: "Nama Keuangan",
-        accessor: "nama_keuangan",
+        accessor: "name",
       },
       {
         Header: "Username",
-        accessor: "user.username",
+        accessor: "username",
       },
       {
         Header: "Password",
-        accessor: "user.password",
+        accessor: "password",
       },
       {
         Header: "Role",
-        accessor: "user.role",
+        accessor: "role",
       },
       {
         Header: "Action",
         accessor: "",
+        Cell: ({ row }) => (
+          <>
+            <div className="flex justify-between">
+              <Link>
+                <button onClick={() => handleUpdate(row.original.id)}>
+                  Edit
+                </button>
+              </Link>
+              <Link>
+                <button onClick={() => handleDelete(row.original.id)}>
+                  Delete
+                </button>
+              </Link>
+            </div>
+          </>
+        ),
       },
     ],
     []
@@ -52,6 +69,29 @@ function DataKeuangan() {
       console.error("Error fetching data:", error)
     }
   }
+
+  const handleDelete = async (id) => {
+    try {
+      // Make an HTTP request to delete the data based on the ID
+      await axios.delete(`http://127.0.0.1:8000/api/data-keuangan/${id}`)
+      // After successful deletion, you may want to refresh the data in the table
+      getData()
+    } catch (error) {
+      console.error("Error deleting data:", error)
+    }
+  }
+
+  const handleUpdate = async (id) => {
+    try {
+      // Make an HTTP request to delete the data based on the ID
+      await axios.put(`http://127.0.0.1:8000/api/data-koordinator/${id}`)
+      // After successful deletion, you may want to refresh the data in the table
+      getData()
+    } catch (error) {
+      console.error("Error updating data:", error)
+    }
+  }
+
   useEffect(() => {
     getData()
   }, [])
