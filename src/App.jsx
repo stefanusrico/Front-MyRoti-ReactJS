@@ -17,6 +17,8 @@ import EditKurir from "./Components/EditKurir"
 import NavKurir from "./Components/NavKurir"
 import KurirPengiriman from "./Components/KurirPengiriman"
 import KurirRekapPengiriman from "./Components/KurirRekapPengiriman.jsx"
+import EditKoordinator from "./Components/EditKoordinator.jsx"
+import EditKeuangan from "./Components/EditKeuangan.jsx"
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
       <Route path="/admin/data-koordinator" element={<DataKoordinator />} />
       <Route path="/admin/data-keuangan" element={<DataKeuangan />} />
       <Route path="/edit-kurir/:id" element={<EditKurir />} />
+      <Route path="/edit-koordinator/:id" element={<EditKoordinator />} />
+      <Route path="/edit-keuangan/:id" element={<EditKeuangan />} />
       <Route path="/post" element={<Distribusi />} />
       <Route path="/post/edit" element={<EditDistribusi />} />
     </Routes>

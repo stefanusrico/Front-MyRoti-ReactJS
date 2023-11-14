@@ -3,10 +3,8 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { Button } from "@material-tailwind/react"
 import profil from "../assets/profil.png"
-import { useNavigate } from "react-router-dom"
 
 function kurirDistribusi() {
-  const navigateTo = useNavigate()
   const [cards, setCards] = useState([])
 
   const getData = async () => {

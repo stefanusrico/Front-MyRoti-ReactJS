@@ -12,19 +12,17 @@ import axios from "axios"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
-function EditKurir() {
+function EditKoordinator() {
   const { id } = useParams()
 
   const [formData, setFormData] = useState({
-    nama_kurir: "",
+    nama_koordinator: "",
     password: "",
-    area_id: "",
   })
 
   const [prevFormData, setPrevFormData] = useState({
-    nama_kurir: "",
+    nama_koordinator: "",
     password: "",
-    area_id: "",
   })
 
   const [error, setError] = useState("")
@@ -34,17 +32,16 @@ function EditKurir() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/data-kurir/${id}`
+          `http://127.0.0.1:8000/api/data-koordinator/${id}`
         )
-        const kurirData = response.data
-        console.log(kurirData)
+        const koordinatorData = response.data
+        console.log(koordinatorData)
 
         setPrevFormData({ ...formData })
 
         setFormData({
-          nama_kurir: kurirData.nama_kurir,
-          area_id: kurirData.area_id,
-          password: kurirData.password,
+          nama_koordinator: koordinatorData.nama_koordinator,
+          password: koordinatorData.password,
         })
       } catch (error) {
         setError("Error fetching data")
@@ -65,7 +62,6 @@ function EditKurir() {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
-    console.log(setShowPassword(!showPassword))
   }
 
   const handleUpdate = async () => {
@@ -74,14 +70,14 @@ function EditKurir() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/update-kurir/${id}`,
+        `http://127.0.0.1:8000/api/update-koordinator/${id}`,
         formData
       )
 
       if (formData.password !== prevFormData.password) {
         // Jika password baru dimasukkan, perbarui password pengguna (User)
         const passwordResponse = await axios.put(
-          `http://127.0.0.1:8000/api/update-kurir-password/${id}`,
+          `http://127.0.0.1:8000/api/update-koordinator-password/${id}`,
           { password: formData.password }
         )
         console.log("Password Updated:", passwordResponse.data)
@@ -101,10 +97,10 @@ function EditKurir() {
       <div className="md:p-20 md:pt-20 md:pb-52 md:ml-48 scroll max-h-[100vh] overflow-y-auto">
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
-            Edit Kurir
+            Edit Koordinator
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
-            Edit kurir data below:
+            Edit Koordinator data below:
           </Typography>
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-1 flex flex-col gap-6">
@@ -113,8 +109,8 @@ function EditKurir() {
               </Typography>
               <Input
                 size="lg"
-                name="nama_kurir"
-                value={formData.nama_kurir}
+                name="nama_koordinator"
+                value={formData.nama_koordinator}
                 onChange={handleChange}
                 placeholder="Name"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -147,20 +143,6 @@ function EditKurir() {
                   </button>
                 </div>
               </div>
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Area ID
-              </Typography>
-              <Input
-                size="lg"
-                name="area_id"
-                value={formData.area_id}
-                onChange={handleChange}
-                placeholder="Area ID"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                  className: "before:content-none after:content-none",
-                }}
-              />
             </div>
             <Checkbox
               label={
@@ -199,4 +181,4 @@ function EditKurir() {
   )
 }
 
-export default EditKurir
+export default EditKoordinator

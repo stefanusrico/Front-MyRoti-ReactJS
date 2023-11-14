@@ -1,8 +1,29 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { useTable } from "react-table"
+import { useTable, usePagination } from "react-table"
 import NavAdmin from "./NavbarAdmin"
 import { Link } from "react-router-dom"
+
+function PasswordCell({ password }) {
+  const [showPassword, setShowPassword] = useState(false)
+  // const history = useHistory()
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+
+  return (
+    <div>
+      {showPassword ? <span>{password}</span> : <span>*********</span>}
+      <i
+        className={`fa ${
+          showPassword ? "fa-eye-slash" : "fa-eye"
+        } ml-2 cursor-pointer`}
+        onClick={togglePasswordVisibility}
+      ></i>
+    </div>
+  )
+}
 
 function DataKoordinator() {
   const [data, setData] = useState([])
@@ -18,15 +39,16 @@ function DataKoordinator() {
       },
       {
         Header: "Username",
-        accessor: "username", // Akses username dari relasi user
+        accessor: "username",
       },
       {
         Header: "Password",
-        accessor: "password", // Akses password dari relasi user
+        accessor: "password",
+        Cell: ({ value }) => <PasswordCell password={value} />,
       },
       {
         Header: "Role",
-        accessor: "role", // Akses role dari relasi user
+        accessor: "role",
       },
       {
         Header: "Action",
@@ -34,7 +56,7 @@ function DataKoordinator() {
         Cell: ({ row }) => (
           <>
             <div className="flex justify-between">
-              <Link to={`/edit/${row.original.id}`}>Edit</Link>
+              <Link to={`/edit-koordinator/${row.original.id}`}>Edit</Link>
               <Link>
                 <button onClick={() => handleDelete(row.original.id)}>
                   Delete
@@ -48,29 +70,10 @@ function DataKoordinator() {
     []
   )
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns,
-      data,
-    })
-
-  const getData = async () => {
-    try {
-      const response = await axios.get(
-        "http://127.0.0.1:8000/api/data-koordinator"
-      )
-      const adminKoordinator = response.data
-      console.log(adminKoordinator)
-      setData(adminKoordinator)
-    } catch (error) {
-      console.error("Error fetching data:", error.message)
-    }
-  }
-
   const handleDelete = async (id) => {
     try {
       // Make an HTTP request to delete the data based on the ID
-      await axios.delete(`http://127.0.0.1:8000/api/data-koordinator/${id}`)
+      await axios.delete(`http://127.0.0.1:8000/api/delete-koordinator/${id}`)
       // After successful deletion, you may want to refresh the data in the table
       getData()
     } catch (error) {
@@ -78,18 +81,41 @@ function DataKoordinator() {
     }
   }
 
-  const navigateEdit = (id) => {
-    window.location.href = `admin/dashboard/${id}`
-  }
+  // Define pagination options
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 5 }, // Initial pagination state
+    },
+    usePagination
+  )
 
-  const handleUpdate = async (id) => {
+  const getData = async () => {
     try {
-      // Make an HTTP request to delete the data based on the ID
-      await axios.put(`http://127.0.0.1:8000/api/data-koordinator/${id}`)
-      // After successful deletion, you may want to refresh the data in the table
-      getData()
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/data-koordinator"
+      )
+      console.log(response)
+      const adminKoordinator = response.data
+      setData(adminKoordinator)
     } catch (error) {
-      console.error("Error updating data:", error)
+      console.error("Error fetching data:", error)
     }
   }
 
@@ -131,34 +157,23 @@ function DataKoordinator() {
                     className="bg-light divide-y divide-gray-700"
                     {...getTableBodyProps()}
                   >
-                    {rows.map((row) => {
+                    {page.map((row) => {
                       prepareRow(row)
                       return (
                         <tr
                           key={row.id}
                           {...row.getRowProps()}
-                          className="odd:bg-gray-700 even:bg-gray-800 text-white hover:bg-gray-600 hover:cursor-pointer focus:outline-none"
+                          className="odd:bg-gray-700 even:bg-gray-800 text-white hover:bg-gray-600 focus:outline-none"
+                          style={{ cursor: "auto" }} // Set the cursor style to 'auto'
                         >
                           {row.cells.map((cell) => {
                             return (
                               <td
-                                key={cell.column.id}
+                                key={cell.row.id + cell.column.id}
                                 className="px-16 py-6 whitespace-nowrap"
                                 {...cell.getCellProps()}
                               >
-                                {cell.column.id === "user.username"
-                                  ? cell.row.original.user
-                                    ? cell.row.original.user.username
-                                    : ""
-                                  : cell.column.id === "user.password"
-                                  ? cell.row.original.user
-                                    ? cell.row.original.user.password
-                                    : ""
-                                  : cell.column.id === "user.role"
-                                  ? cell.row.original.user
-                                    ? cell.row.original.user.role
-                                    : ""
-                                  : cell.render("Cell")}
+                                {cell.render("Cell")}
                               </td>
                             )
                           })}
@@ -167,6 +182,85 @@ function DataKoordinator() {
                     })}
                   </tbody>
                 </table>
+                <div className="pagination flex items-center justify-center space-x-4 mt-4">
+                  <button
+                    onClick={() => gotoPage(0)}
+                    disabled={!canPreviousPage}
+                    className={`${
+                      !canPreviousPage
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-300"
+                    }`}
+                  >
+                    {"<<"}
+                  </button>{" "}
+                  <button
+                    onClick={() => previousPage()}
+                    disabled={!canPreviousPage}
+                    className={`${
+                      !canPreviousPage
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-300"
+                    }`}
+                  >
+                    {"<"}
+                  </button>{" "}
+                  <button
+                    onClick={() => nextPage()}
+                    disabled={!canNextPage}
+                    className={`${
+                      !canNextPage
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-300"
+                    }`}
+                  >
+                    {">"}
+                  </button>{" "}
+                  <button
+                    onClick={() => gotoPage(pageCount - 1)}
+                    disabled={!canNextPage}
+                    className={`${
+                      !canNextPage
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-300"
+                    }`}
+                  >
+                    {">>"}
+                  </button>{" "}
+                  <span>
+                    Page{" "}
+                    <strong>
+                      {pageIndex + 1} of {pageOptions.length}
+                    </strong>{" "}
+                  </span>
+                  <span>
+                    | Go to page:{" "}
+                    <input
+                      type="number"
+                      defaultValue={pageIndex + 1}
+                      onChange={(e) => {
+                        const page = e.target.value
+                          ? Number(e.target.value) - 1
+                          : 0
+                        gotoPage(page)
+                      }}
+                      className="w-20 p-1 text-center border border-gray-400 rounded"
+                    />
+                  </span>{" "}
+                  <select
+                    value={pageSize}
+                    onChange={(e) => {
+                      setPageSize(Number(e.target.value))
+                    }}
+                    className="p-1 border border-gray-400 rounded"
+                  >
+                    {[5, 10, 15, 20, 30, 40, 50, 60].map((size) => (
+                      <option key={size} value={size}>
+                        Show {size}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           </div>

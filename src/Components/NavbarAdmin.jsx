@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import LogoRoti from "../assets/LogoRoti.png"
 
 function NavAdmin() {

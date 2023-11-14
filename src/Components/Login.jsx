@@ -83,6 +83,7 @@ const Login = () => {
                       autoComplete="none"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
+                      required
                     />
                   </div>
                   <div className="w-full max-w-md">
@@ -94,6 +95,7 @@ const Login = () => {
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                       />
                       <i
                         className={`fa ${

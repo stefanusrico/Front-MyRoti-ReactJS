@@ -6,7 +6,6 @@ import { Link } from "react-router-dom"
 
 function PasswordCell({ password }) {
   const [showPassword, setShowPassword] = useState(false)
-  // const history = useHistory()
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -78,17 +77,6 @@ function DataKurir() {
       getData()
     } catch (error) {
       console.error("Error deleting data:", error)
-    }
-  }
-
-  const handleUpdate = async (id) => {
-    try {
-      // Make an HTTP request to delete the data based on the ID
-      await axios.put(`http://127.0.0.1:8000/api/update-kurir/${id}`)
-      // After successful deletion, you may want to refresh the data in the table
-      getData()
-    } catch (error) {
-      console.error("Error updating data:", error)
     }
   }
 

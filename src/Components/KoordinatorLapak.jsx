@@ -7,7 +7,6 @@ function KoordinatorLapak() {
   const [isFormVisible, setFormVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
-  const [editingLapakId, setEditingLapakId] = useState(null)
   const [formData, setFormData] = useState({
     id_lapak: null,
     image: null,
@@ -104,7 +103,6 @@ function KoordinatorLapak() {
     console.log("Editing lapak with id:", id)
 
     setEditMode(true)
-    setEditingLapakId(id)
 
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/lapak/${id}`)
