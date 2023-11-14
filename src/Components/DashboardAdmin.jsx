@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import NavAdmin from "./NavbarAdmin"
 import axios from "axios"
 

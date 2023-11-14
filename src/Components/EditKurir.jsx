@@ -9,6 +9,8 @@ import {
 import NavAdmin from "./NavbarAdmin"
 import React, { useState, useEffect } from "react"
 import axios from "axios"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
 function EditKurir() {
   const { id } = useParams()
@@ -21,10 +23,12 @@ function EditKurir() {
 
   const [prevFormData, setPrevFormData] = useState({
     nama_kurir: "",
+    password: "",
     area_id: "",
   })
 
   const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +44,7 @@ function EditKurir() {
         setFormData({
           nama_kurir: kurirData.nama_kurir,
           area_id: kurirData.area_id,
+          password: kurirData.password,
         })
       } catch (error) {
         setError("Error fetching data")
@@ -56,6 +61,11 @@ function EditKurir() {
       ...formData,
       [name]: value,
     })
+  }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+    console.log(setShowPassword(!showPassword))
   }
 
   const handleUpdate = async () => {
@@ -112,21 +122,31 @@ function EditKurir() {
                   className: "before:content-none after:content-none",
                 }}
               />
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Password
-              </Typography>
-              <Input
-                type="password"
-                size="lg"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Password"
-                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                labelProps={{
-                  className: "before:content-none after:content-none",
-                }}
-              />
+              <div className="mb-1 flex flex-col gap-6 relative">
+                <Typography variant="h6" color="blue-gray" className="-mb-3">
+                  Password
+                </Typography>
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    size="lg"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Password"
+                    labelProps={{
+                      className: "before:content-none after:content-none",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700"
+                    onClick={togglePasswordVisibility}
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                  </button>
+                </div>
+              </div>
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Area ID
               </Typography>
