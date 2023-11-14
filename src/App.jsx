@@ -13,6 +13,9 @@ import Distribusi from "./Components/distribusiKurir"
 import EditDistribusi from "./Components/editDistribusi"
 import NavAdmin from "./Components/NavbarAdmin"
 import KoordinatorProduct from "./Components/KoordinatorProduk"
+import NavKurir from "./Components/NavKurir"
+import KurirPengiriman from "./Components/KurirPengiriman"
+import KurirRekapPengiriman from "./Components/KurirRekapPengiriman.jsx"
 
 function App() {
   return (
@@ -22,6 +25,7 @@ function App() {
       <Route path="/register" element={<Registration />} />
       {/* Navbar */}
       <Route path="/navbar" element={<NavKoor />} />
+      <Route path="/navkurir" element={<NavKurir />} />
       {/* Koordinator */}
       <Route path="/koordinator/distribusi" element={<LapakDistribusi />} />
       <Route
@@ -37,6 +41,9 @@ function App() {
       <Route path="/admin/data-keuangan" element={<DataKeuangan />} />
       <Route path="/post" element={<Distribusi />} />
       <Route path="/post/edit" element={<EditDistribusi />} />
+      {/*Kurir*/}
+      <Route path="/kurir/pengiriman" element={<KurirPengiriman />} />
+      <Route path="/kurir/rekappengiriman" element={<KurirRekapPengiriman/>} />
     </Routes>
   )
 }
