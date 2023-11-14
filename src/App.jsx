@@ -23,7 +23,7 @@ function App() {
     <Routes>
       {/* Auth */}
       <Route path="/" element={<Login />} />
-      <Route path="/register" element={<Registration />} />
+      <Route path="/admin/register" element={<Registration />} />
       {/* Navbar */}
       <Route path="/navbar" element={<NavKoor />} />
       <Route path="/navkurir" element={<NavKurir />} />
@@ -40,6 +40,7 @@ function App() {
       <Route path="/admin/data-kurir" element={<DataKurir />} />
       <Route path="/admin/data-koordinator" element={<DataKoordinator />} />
       <Route path="/admin/data-keuangan" element={<DataKeuangan />} />
+      <Route path="/edit-kurir/:id" element={<EditKurir />} />
       <Route path="/post" element={<Distribusi />} />
       <Route path="/post/edit" element={<EditDistribusi />} />
     </Routes>

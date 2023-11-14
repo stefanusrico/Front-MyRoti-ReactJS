@@ -35,20 +35,20 @@ function DataKurir() {
       },
       {
         Header: "Nama Kurir",
-        accessor: "nama_kurir",
+        accessor: "name",
       },
       {
         Header: "Username",
-        accessor: "user.username",
+        accessor: "username",
       },
       {
         Header: "Password",
-        accessor: "user.password_unhashed",
+        accessor: "password",
         Cell: ({ value }) => <PasswordCell password={value} />,
       },
       {
         Header: "Role",
-        accessor: "user.role",
+        accessor: "role",
       },
       {
         Header: "Action",

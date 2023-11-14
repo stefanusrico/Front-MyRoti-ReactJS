@@ -33,6 +33,7 @@ function EditKurir() {
           `http://127.0.0.1:8000/api/data-kurir/${id}`
         )
         const kurirData = response.data
+        console.log(kurirData)
 
         setPrevFormData({ ...formData })
 
