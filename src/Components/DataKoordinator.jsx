@@ -3,10 +3,10 @@ import axios from "axios"
 import { useTable, usePagination } from "react-table"
 import NavAdmin from "./NavbarAdmin"
 import { Link } from "react-router-dom"
+import Swal from "sweetalert2"
 
 function PasswordCell({ password }) {
   const [showPassword, setShowPassword] = useState(false)
-  // const history = useHistory()
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -71,13 +71,34 @@ function DataKoordinator() {
   )
 
   const handleDelete = async (id) => {
-    try {
-      // Make an HTTP request to delete the data based on the ID
-      await axios.delete(`http://127.0.0.1:8000/api/delete-koordinator/${id}`)
-      // After successful deletion, you may want to refresh the data in the table
-      getData()
-    } catch (error) {
-      console.error("Error deleting data:", error)
+    // Use SweetAlert for confirmation
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    })
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`http://127.0.0.1:8000/api/delete-koordinator/${id}`)
+        getData()
+        Swal.fire({
+          title: "Deleted!",
+          text: "Koordinator has been deleted.",
+          icon: "success",
+        })
+      } catch (error) {
+        console.error("Error deleting data:", error)
+        Swal.fire({
+          title: "Error",
+          text: "An error occurred while deleting the data.",
+          icon: "error",
+        })
+      }
     }
   }
 
@@ -164,19 +185,17 @@ function DataKoordinator() {
                           key={row.id}
                           {...row.getRowProps()}
                           className="odd:bg-gray-700 even:bg-gray-800 text-white hover:bg-gray-600 focus:outline-none"
-                          style={{ cursor: "auto" }} // Set the cursor style to 'auto'
+                          style={{ cursor: "auto" }}
                         >
-                          {row.cells.map((cell) => {
-                            return (
-                              <td
-                                key={cell.row.id + cell.column.id}
-                                className="px-16 py-6 whitespace-nowrap"
-                                {...cell.getCellProps()}
-                              >
-                                {cell.render("Cell")}
-                              </td>
-                            )
-                          })}
+                          {row.cells.map((cell) => (
+                            <td
+                              key={cell.row.id + cell.column.id}
+                              className="px-16 py-6 whitespace-nowrap"
+                              {...cell.getCellProps()}
+                            >
+                              {cell.render("Cell")}
+                            </td>
+                          ))}
                         </tr>
                       )
                     })}

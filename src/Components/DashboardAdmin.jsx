@@ -1,59 +1,67 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import NavAdmin from "./NavbarAdmin";
+import { useEffect, useState } from "react"
+import axios from "axios"
+import NavAdmin from "./NavbarAdmin"
 
 function DashboardAdmin() {
-  const [amountKoordinator, setAmountKoordinator] = useState(null);
-  const [amountUser, setAmountUser] = useState(null);
-  const [amountKurir, setAmountKurir] = useState(null);
-  const [amountKeuangan, setAmountKeuangan] = useState(null);
+  const [amountKoordinator, setAmountKoordinator] = useState(null)
+  const [amountUser, setAmountUser] = useState(null)
+  const [amountKurir, setAmountKurir] = useState(null)
+  const [amountKeuangan, setAmountKeuangan] = useState(null)
 
   const getAmountKoordinator = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/get-amount-koordinator");
-      const data = response.data;
-      setAmountKoordinator(data);
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/get-amount-koordinator"
+      )
+      const data = response.data
+      setAmountKoordinator(data)
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error)
     }
-  };
+  }
 
   const getAmountUser = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/get-amount-user");
-      const data = response.data;
-      setAmountUser(data);
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/get-amount-user"
+      )
+      const data = response.data
+      setAmountUser(data)
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error)
     }
-  };
+  }
 
   const getAmountKurir = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/get-amount-kurir");
-      const data = response.data;
-      setAmountKurir(data);
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/get-amount-kurir"
+      )
+      const data = response.data
+      setAmountKurir(data)
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error)
     }
-  };
+  }
 
   const getAmountKeuangan = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/get-amount-keuangan");
-      const data = response.data;
-      setAmountKeuangan(data);
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/get-amount-keuangan"
+      )
+      const data = response.data
+      setAmountKeuangan(data)
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error)
     }
-  };
+  }
 
   useEffect(() => {
-    getAmountKoordinator();
-    getAmountUser();
-    getAmountKurir();
-    getAmountKeuangan();
-  }, []);
+    getAmountKoordinator()
+    getAmountUser()
+    getAmountKurir()
+    getAmountKeuangan()
+  }, [])
 
   return (
     <>
@@ -91,11 +99,13 @@ function DashboardAdmin() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 const DashboardCard = ({ icon, color, title, amount, viewDetailsUrl }) => (
-  <div className={`border border-gray-400 ${color} p-1 flex flex-col justify-between`}>
+  <div
+    className={`border border-gray-400 ${color} p-1 flex flex-col justify-between`}
+  >
     <div className="text-center">
       <div className="text-7xl">
         <ion-icon name={icon}></ion-icon>
@@ -107,6 +117,6 @@ const DashboardCard = ({ icon, color, title, amount, viewDetailsUrl }) => (
       view details <ion-icon name="arrow-forward-outline"></ion-icon>
     </a>
   </div>
-);
+)
 
-export default DashboardAdmin;
+export default DashboardAdmin

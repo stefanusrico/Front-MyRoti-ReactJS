@@ -3,6 +3,7 @@ import axios from "axios"
 import { useTable, usePagination } from "react-table"
 import NavAdmin from "./NavbarAdmin"
 import { Link } from "react-router-dom"
+import Swal from "sweetalert2"
 
 function PasswordCell({ password }) {
   const [showPassword, setShowPassword] = useState(false)
@@ -71,10 +72,32 @@ function DataKurir() {
 
   const handleDelete = async (id) => {
     try {
-      // Make an HTTP request to delete the data based on the ID
-      await axios.delete(`http://127.0.0.1:8000/api/delete-kurir/${id}`)
-      // After successful deletion, you may want to refresh the data in the table
-      getData()
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+
+      if (result.isConfirmed) {
+        await axios.delete(`http://127.0.0.1:8000/api/delete-kurir/${id}`)
+        getData()
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Kurir has been deleted.",
+          icon: "success",
+        })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          title: "Cancelled",
+          text: "Your imaginary file is safe :)",
+          icon: "error",
+        })
+      }
     } catch (error) {
       console.error("Error deleting data:", error)
     }
@@ -108,7 +131,6 @@ function DataKurir() {
   const getData = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/data-kurir")
-      console.log(response)
       const adminKurir = response.data
       setData(adminKurir)
     } catch (error) {
