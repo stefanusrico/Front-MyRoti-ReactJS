@@ -43,6 +43,9 @@ function App() {
       <Route path="/edit-kurir/:id" element={<EditKurir />} />
       <Route path="/post" element={<Distribusi />} />
       <Route path="/post/edit" element={<EditDistribusi />} />
+      {/*Kurir*/}
+      <Route path="/kurir/pengiriman" element={<KurirPengiriman />} />
+      <Route path="/kurir/rekappengiriman" element={<KurirRekapPengiriman />} />
     </Routes>
   )
 }
