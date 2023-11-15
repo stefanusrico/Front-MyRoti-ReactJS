@@ -62,7 +62,7 @@ function NavKurir() {
     return (
         <>
             <nav
-                className={`fixed top-0 z-50 w-full bg-Raw-sienna border-2 border-black dark:bg-gray-800 dark:border-gray-700 ${sidebarOpen ? "md:ml-64" : ""
+                className={`fixed top-0 z-50 w-full bg-Raw-sienna border-2 border-coklat dark:bg-gray-800 dark:border-gray-700 ${sidebarOpen ? "md:ml-64" : ""
                     }`}
             >
                 <div className="px-3 py-5 lg:px-5 lg:pl-3">

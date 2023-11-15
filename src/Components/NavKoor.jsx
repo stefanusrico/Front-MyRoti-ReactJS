@@ -62,7 +62,7 @@ export default function NavKoor() {
   return (
     <>
       <nav
-        className={`fixed top-0 z-50 w-full bg-Raw-sienna border-1 border-black dark:bg-gray-800 dark:border-gray-700 ${
+        className={`fixed top-0 z-50 w-full bg-Raw-sienna border-2 border-coklat dark:bg-gray-800 dark:border-gray-700 ${
           sidebarOpen ? "md:ml-64" : ""
         }`}
       >
@@ -124,13 +124,13 @@ export default function NavKoor() {
                         className="text-sm text-gray-900 dark:text-white"
                         role="none"
                       >
-                        Neil Sims
+                        Bang Koordinator
                       </p>
                       <p
                         className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                         role="none"
                       >
-                        neil.sims@flowbite.com
+                        Koordinator.roti@myroti.com
                       </p>
                     </div>
                     <ul className="py-1" role="none">
