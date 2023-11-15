@@ -19,6 +19,8 @@ import KurirPengiriman from "./Components/KurirPengiriman"
 import KurirRekapPengiriman from "./Components/KurirRekapPengiriman.jsx"
 import EditKoordinator from "./Components/EditKoordinator.jsx"
 import EditKeuangan from "./Components/EditKeuangan.jsx"
+import KeuanganRekap from "./Components/KeuanganRekap"
+import NavKeuangan from "./Components/NavbarKeuangan"
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
       {/* Navbar */}
       <Route path="/navbar" element={<NavKoor />} />
       <Route path="/navkurir" element={<NavKurir />} />
+      <Route path="/navbarkeuangan" element={<NavKeuangan />} />
       {/* Koordinator */}
       <Route path="/koordinator/distribusi" element={<LapakDistribusi />} />
       <Route
@@ -50,6 +53,8 @@ function App() {
       {/*Kurir*/}
       <Route path="/kurir/pengiriman" element={<KurirPengiriman />} />
       <Route path="/kurir/rekappengiriman" element={<KurirRekapPengiriman />} />
+      {/* Keuangan */}
+      <Route path="/keuangan/rekap" element={<KeuanganRekap />} />
     </Routes>
   )
 }
