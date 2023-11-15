@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
+import Swal from "sweetalert2"
 
 function EditKeuangan() {
   const { id } = useParams()
@@ -78,10 +79,46 @@ function EditKeuangan() {
       }
 
       console.log("Response from API:", response.data)
-      // Setelah berhasil perubahan, Anda dapat melakukan navigasi atau tindakan lain sesuai kebutuhan
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer)
+          toast.addEventListener("mouseleave", Swal.resumeTimer)
+        },
+      })
+
+      Toast.fire({
+        icon: "success",
+        title: "Update successful",
+        background: "#4CAF50",
+      })
     } catch (error) {
       setError("Error updating data")
       console.error("Error updating data:", error)
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer)
+          toast.addEventListener("mouseleave", Swal.resumeTimer)
+        },
+      })
+
+      Toast.fire({
+        icon: "error",
+        title: "Error updating data",
+        text: error.message,
+        background: "#FF5252",
+      })
     }
   }
 

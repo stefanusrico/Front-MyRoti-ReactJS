@@ -110,7 +110,9 @@ const DashboardCard = ({ icon, color, title, amount, viewDetailsUrl }) => (
       <div className="text-7xl">
         <ion-icon name={icon}></ion-icon>
       </div>
-      <p className="text-l">{amount !== null ? amount : "Loading..."}</p>
+      <p className="text-2xl font-bold">
+        {amount !== null ? amount : "Loading..."}
+      </p>
       <span className="text-l">{title}</span>
     </div>
     <a href={viewDetailsUrl} className="text-center border-2 bg-gray-300">
