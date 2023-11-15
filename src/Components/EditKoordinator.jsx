@@ -1,11 +1,5 @@
 import { useParams } from "react-router-dom"
-import {
-  Card,
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-} from "@material-tailwind/react"
+import { Card, Input, Button, Typography } from "@material-tailwind/react"
 import NavAdmin from "./NavbarAdmin"
 import { useState, useEffect } from "react"
 import axios from "axios"
@@ -94,7 +88,7 @@ function EditKoordinator() {
   return (
     <>
       <NavAdmin />
-      <div className="md:p-20 md:pt-20 md:pb-52 md:ml-48 scroll max-h-[100vh] overflow-y-auto">
+      <div className="md:p-20 md:pt-20 md:pb-52 md:ml-48 scroll max-h-[100vh] overflow-y-auto flex items-center justify-center">
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
             Edit Koordinator
@@ -102,7 +96,7 @@ function EditKoordinator() {
           <Typography color="gray" className="mt-1 font-normal">
             Edit Koordinator data below:
           </Typography>
-          <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+          <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 h-full max-h-screen">
             <div className="mb-1 flex flex-col gap-6">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Name

@@ -1,11 +1,5 @@
 import { useParams } from "react-router-dom"
-import {
-  Card,
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-} from "@material-tailwind/react"
+import { Card, Input, Button, Typography } from "@material-tailwind/react"
 import NavAdmin from "./NavbarAdmin"
 import { useState, useEffect } from "react"
 import axios from "axios"
@@ -50,7 +44,7 @@ function EditKeuangan() {
     }
 
     fetchData()
-  }, [id])
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -94,7 +88,7 @@ function EditKeuangan() {
   return (
     <>
       <NavAdmin />
-      <div className="md:p-20 md:pt-20 md:pb-52 md:ml-48 scroll max-h-[100vh] overflow-y-auto">
+      <div className="md:p-20 md:pt-20 md:pb-52 md:ml-48 scroll max-h-[100vh] overflow-y-auto flex items-center justify-center">
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
             Edit Keuangan
@@ -102,7 +96,7 @@ function EditKeuangan() {
           <Typography color="gray" className="mt-1 font-normal">
             Edit Keuangan data below:
           </Typography>
-          <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+          <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 h-full max-h-screen">
             <div className="mb-1 flex flex-col gap-6">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Name
@@ -144,24 +138,6 @@ function EditKeuangan() {
                 </div>
               </div>
             </div>
-            <Checkbox
-              label={
-                <Typography
-                  variant="small"
-                  color="gray"
-                  className="flex items-center font-normal"
-                >
-                  I agree to the
-                  <a
-                    href="#"
-                    className="font-medium transition-colors hover:text-gray-900"
-                  >
-                    &nbsp;Terms and Conditions
-                  </a>
-                </Typography>
-              }
-              containerProps={{ className: "-ml-2.5" }}
-            />
             <Button
               className="bg-red-500 mt-6"
               onClick={handleUpdate}
