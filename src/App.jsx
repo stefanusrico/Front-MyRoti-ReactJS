@@ -21,6 +21,8 @@ import EditKoordinator from "./Components/EditKoordinator.jsx"
 import EditKeuangan from "./Components/EditKeuangan.jsx"
 import KeuanganRekap from "./Components/KeuanganRekap"
 import NavKeuangan from "./Components/NavbarKeuangan"
+import KoordinatorLapakFormAdd from "./Components/KoordinatorLapakFormAdd.jsx"
+import KoordinatorLapakFormEdit from "./Components/KoordinatorLapakFormEdit.jsx"
 
 function App() {
   return (
@@ -39,6 +41,14 @@ function App() {
         element={<KurirDistribusi />}
       />
       <Route path="/koordinator/lapak" element={<KoordinatorLapak />} />
+      <Route
+        path="/koordinator/tambah-lapak"
+        element={<KoordinatorLapakFormAdd />}
+      />
+      <Route
+        path="/koordinator/edit-lapak/:id"
+        element={<KoordinatorLapakFormEdit />}
+      />
       <Route path="/koordinator/product" element={<KoordinatorProduct />} />
       {/* Admin */}
       <Route path="/admin/dashboard" element={<DashboardAdmin />} />

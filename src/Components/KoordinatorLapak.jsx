@@ -2,89 +2,24 @@ import NavKoor from "./NavKoor"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { Button } from "@material-tailwind/react"
+import { Link } from "react-router-dom"
 
 function KoordinatorLapak() {
-  const [isFormVisible, setFormVisible] = useState(false)
-  const [editMode, setEditMode] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [formData, setFormData] = useState({
-    id_lapak: null,
-    image: null,
-    nama_lapak: "",
-    area_id: "",
-    alamat_lapak: "",
-    contact_lapak: "",
-  })
+  // const [isFormVisible, setFormVisible] = useState(false)
+  // const [editMode, setEditMode] = useState(false)
+  // const [selectedImage, setSelectedImage] = useState(null)
+  // const [formData, setFormData] = useState({
+  //   id_lapak: null,
+  //   image: null,
+  //   nama_lapak: "",
+  //   area_id: "",
+  //   alamat_lapak: "",
+  //   contact_lapak: "",
+  // })
   const [cards, setCards] = useState([])
 
-  // Fungsi untuk menampilkan/menyembunyikan formulir
-  const toggleFormVisibility = () => {
-    setFormVisible(!isFormVisible)
-
-    // Atur ulang formulir jika tidak dalam mode edit
-    if (editMode) {
-      setEditMode(false)
-      setFormData({
-        id_lapak: null,
-        image: null,
-        nama_lapak: "",
-        area_id: "",
-        alamat_lapak: "",
-        contact_lapak: "",
-      })
-      setSelectedImage(null)
-    }
-  }
-
-  // Fungsi untuk mengubah input dalam formulir
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-  }
-
-  // Fungsi untuk menangani pemilihan gambar
-  const handleImage = (e) => {
-    const file = e.target.files[0]
-    setSelectedImage(file)
-  }
-
-  // Fungsi untuk menambahkan atau memperbarui data
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (editMode) {
-      editDataSubmit()
-    } else {
-      addData()
-    }
-  }
-
-  // Fungsi untuk menambahkan data
-  const addData = async () => {
-    try {
-      const data = new FormData()
-      data.append("image", selectedImage)
-      data.append("nama_lapak", formData.nama_lapak)
-      data.append("area_id", formData.area_id)
-      data.append("alamat_lapak", formData.alamat_lapak)
-      data.append("contact_lapak", formData.contact_lapak)
-
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/lapak",
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-
-      console.log("Data berhasil ditambahkan:", response.data)
-
-      getData()
-      toggleFormVisibility()
-    } catch (error) {
-      console.error("Error adding data:", error)
-    }
+  const redirectAddLapakForm = () => {
+    window.location.href = "/koordinator/tambah-lapak"
   }
 
   // Fungsi untuk mengambil data dari server
@@ -98,67 +33,6 @@ function KoordinatorLapak() {
     }
   }
 
-  // Fungsi untuk mengedit data
-  const editData = async (id) => {
-    console.log("Editing lapak with id:", id)
-
-    setEditMode(true)
-
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/lapak/${id}`)
-
-      const lapakData = response.data
-
-      setFormData(() => ({
-        id_lapak: id,
-        image: lapakData.image,
-        nama_lapak: lapakData.nama_lapak,
-        area_id: lapakData.area_id,
-        alamat_lapak: lapakData.alamat_lapak,
-        contact_lapak: lapakData.contact_lapak,
-        area: lapakData.area,
-      }))
-
-      if (lapakData.image) {
-        setSelectedImage(null)
-      }
-
-      toggleFormVisibility()
-    } catch (error) {
-      console.error("Error fetching data for editing:", error)
-    }
-  }
-
-  // Fungsi untuk mengirim data yang diedit
-  const editDataSubmit = async () => {
-    try {
-      const data = {
-        area_id: formData.area_id,
-        alamat_lapak: formData.alamat_lapak,
-        contact_lapak: formData.contact_lapak,
-      }
-
-      const response = await axios.put(
-        `http://127.0.0.1:8000/api/update-lapak/${formData.id_lapak}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-
-      console.log("Data berhasil diedit:", response.data)
-
-      getData()
-      setEditMode(false)
-      toggleFormVisibility()
-    } catch (error) {
-      console.error("Error editing data:", error)
-    }
-  }
-
-  // Fungsi untuk menghapus data
   const deleteData = async (id) => {
     try {
       const response = await axios.delete(
@@ -172,7 +46,6 @@ function KoordinatorLapak() {
     }
   }
 
-  // Memuat data saat komponen pertama kali di-render
   useEffect(() => {
     getData()
   }, [])
@@ -180,87 +53,17 @@ function KoordinatorLapak() {
   return (
     <>
       <NavKoor />
-      <div className="md:p-20 md:pt-20 md:pb-52 md:ml-48 scroll max-h-[100vh] overflow-y-auto">
+      <div className="md:p-20 md:pt-20 md:pb-52 md:ml-60 md:mt-10 scroll max-h-[100vh] overflow-y-auto">
         <div className="p-16 border-2 bg-gray-100 border-gray-400 rounded-lg dark:border-gray-700">
           <div>
             <Button
-              onClick={toggleFormVisibility}
+              onClick={redirectAddLapakForm}
               className="flex flex-row items-center p-3 gap-3 m-4 text-black bg-coklat-kuning border-4 hover-bg-slate-50 focus:ring-4 focus:outline focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
             >
               <ion-icon name="add-circle-outline"></ion-icon>
               <span className="hidden sm:inline">Tambah Lapak</span>
             </Button>
           </div>
-          {isFormVisible && (
-            <form
-              onSubmit={handleSubmit}
-              className="md:p-10 md:m-2 md:border-2 bg-gray-100 border-gray-200 rounded-lg dark:border-gray-700"
-              action="POST"
-            >
-              <div>
-                {!editMode && (
-                  <input
-                    className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
-                    type="file"
-                    name="image"
-                    accept="image/*"
-                    onChange={handleImage}
-                  />
-                )}
-              </div>
-              <div>
-                <input
-                  className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
-                  type="text"
-                  name="nama_lapak"
-                  placeholder="Nama lapak"
-                  autoComplete="off"
-                  value={formData.nama_lapak || ""}
-                  onChange={handleInputChange}
-                  disabled={editMode}
-                />
-              </div>
-              <div>
-                <input
-                  className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
-                  type="text"
-                  name="alamat_lapak"
-                  placeholder="Alamat lapak"
-                  autoComplete="off"
-                  value={formData.alamat_lapak}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <input
-                  className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
-                  type="text"
-                  name="area_id"
-                  placeholder="Area"
-                  autoComplete="off"
-                  value={formData.area_id}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <input
-                  className="md:mb-1 md:w-44 md:border-2 border-gray-700 rounded-md"
-                  type="text"
-                  name="contact_lapak"
-                  placeholder="Contact Person lapak"
-                  autoComplete="off"
-                  value={formData.contact_lapak}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <button
-                className="bg-transparant hover-bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-2 mt-2 border border-blue-500 hover:border-transparent rounded-full"
-                type="submit"
-              >
-                {editMode ? "Update" : "Simpan"}
-              </button>
-            </form>
-          )}
           {cards.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {cards.map((card) => (
@@ -293,8 +96,8 @@ function KoordinatorLapak() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between mt-3">
-                      <Button
-                        onClick={() => editData(card.id_lapak)}
+                      <Link
+                        to={`/koordinator/edit-lapak/${card.id_lapak}`}
                         className="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-bold md:py-2 md:px-4 rounded-full"
                       >
                         <ion-icon
@@ -302,7 +105,7 @@ function KoordinatorLapak() {
                           name="create-outline"
                         ></ion-icon>
                         <span className="hidden sm:inline">Edit</span>
-                      </Button>
+                      </Link>
                       <Button
                         onClick={() => deleteData(card.id_lapak)}
                         className="bg-red-500 hover-bg-red-700 text-white text-sm font-bold md:py-2 md:px-4 rounded-full"
