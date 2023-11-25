@@ -5,17 +5,6 @@ import { Button } from "@material-tailwind/react"
 import { Link } from "react-router-dom"
 
 function KoordinatorLapak() {
-  // const [isFormVisible, setFormVisible] = useState(false)
-  // const [editMode, setEditMode] = useState(false)
-  // const [selectedImage, setSelectedImage] = useState(null)
-  // const [formData, setFormData] = useState({
-  //   id_lapak: null,
-  //   image: null,
-  //   nama_lapak: "",
-  //   area_id: "",
-  //   alamat_lapak: "",
-  //   contact_lapak: "",
-  // })
   const [cards, setCards] = useState([])
 
   const redirectAddLapakForm = () => {

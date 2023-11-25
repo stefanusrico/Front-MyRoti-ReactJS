@@ -11,15 +11,15 @@ function EditKurir() {
   const { id } = useParams()
 
   const [formData, setFormData] = useState({
-    nama_kurir: "",
-    password: "",
-    area_id: "",
+    name: "",
+    password_unhashed: "",
+    id_area: "",
   })
 
   const [prevFormData, setPrevFormData] = useState({
-    nama_kurir: "",
-    password: "",
-    area_id: "",
+    name: "",
+    password_unhashed: "",
+    id_area: "",
   })
 
   const [error, setError] = useState("")
@@ -32,14 +32,21 @@ function EditKurir() {
           `http://127.0.0.1:8000/api/data-kurir/${id}`
         )
         const kurirData = response.data
-        console.log(kurirData)
+        console.log("Response from API:", kurirData) // Tambahkan ini untuk melihat respons dari server
 
-        setPrevFormData({ ...formData })
+        // Periksa apakah properti user dan area ada sebelum mengaksesnya
+        setPrevFormData({
+          name: kurirData.name,
+          email: kurirData.email,
+          password_unhashed: kurirData.password,
+          id_area: kurirData.id_area,
+        })
 
         setFormData({
-          nama_kurir: kurirData.nama_kurir,
-          area_id: kurirData.area_id,
-          password: kurirData.password,
+          name: kurirData.name,
+          email: kurirData.email,
+          password_unhashed: kurirData.password,
+          id_area: kurirData.id_area,
         })
       } catch (error) {
         setError("Error fetching data")
@@ -60,7 +67,6 @@ function EditKurir() {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
-    console.log(setShowPassword(!showPassword))
   }
 
   const handleUpdate = async () => {
@@ -73,11 +79,11 @@ function EditKurir() {
         formData
       )
 
-      if (formData.password !== prevFormData.password) {
+      if (formData.password_unhashed !== prevFormData.password_unhashed) {
         // Jika password baru dimasukkan, perbarui password pengguna (User)
         const passwordResponse = await axios.put(
           `http://127.0.0.1:8000/api/update-kurir-password/${id}`,
-          { password: formData.password }
+          { password_unhashed: formData.password_unhashed }
         )
         console.log("Password Updated:", passwordResponse.data)
       }
@@ -144,8 +150,8 @@ function EditKurir() {
               </Typography>
               <Input
                 size="lg"
-                name="nama_kurir"
-                value={formData.nama_kurir}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 placeholder="Name"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -161,8 +167,8 @@ function EditKurir() {
                   <Input
                     type={showPassword ? "text" : "password"}
                     size="lg"
-                    name="password"
-                    value={formData.password}
+                    name="password_unhashed"
+                    value={formData.password_unhashed}
                     onChange={handleChange}
                     placeholder="Password"
                     labelProps={{
@@ -183,8 +189,8 @@ function EditKurir() {
               </Typography>
               <Input
                 size="lg"
-                name="area_id"
-                value={formData.area_id}
+                name="id_area"
+                value={formData.id_area}
                 onChange={handleChange}
                 placeholder="Area ID"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"

@@ -38,12 +38,12 @@ function DataKoordinator() {
         accessor: "name",
       },
       {
-        Header: "Username",
-        accessor: "username",
+        Header: "Email",
+        accessor: "email",
       },
       {
         Header: "Password",
-        accessor: "password",
+        accessor: "password_unhashed",
         Cell: ({ value }) => <PasswordCell password={value} />,
       },
       {

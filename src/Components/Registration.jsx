@@ -5,11 +5,11 @@ import NavAdmin from "./NavbarAdmin"
 function Registration() {
   const [formData, setFormData] = useState({
     name: "",
-    username: "",
+    email: "",
     password: "",
     password_confirmation: "",
-    role: "",
-    area_id: "",
+    id_role: "",
+    id_area: "",
   })
 
   const handleChange = (e) => {
@@ -19,15 +19,22 @@ function Registration() {
 
   const roleOptions = [
     { type: "disabled", label: "Pilih Peran", value: "" }, // Menambahkan opsi default
-    { label: "Koordinator", value: "Koordinator" },
-    { label: "Kurir", value: "Kurir" },
-    { label: "Keuangan", value: "Keuangan" },
+    { label: "Admin", value: 2 },
+    { label: "Koordinator", value: 3 },
+    { label: "Kurir", value: 1 },
+    { label: "Keuangan", value: 4 },
   ]
 
   const handleSubmit = (e) => {
     e.preventDefault()
     axios
-      .post("http://127.0.0.1:8000/api/register", formData)
+      .post("http://127.0.0.1:8000/api/register", {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        id_role: formData.id_role,
+        id_area: formData.id_area || null,
+      })
       .then((response) => {
         console.log(response.data)
       })
@@ -38,7 +45,7 @@ function Registration() {
 
   return (
     <>
-      <NavAdmin/>
+      <NavAdmin />
       <div className="bg-coklat md:mt-16 md:ml-64 md:p-10">
         <div className="flex justify-center font-bold text-2xl p-5">
           REGISTRATION
@@ -48,9 +55,9 @@ function Registration() {
             <p>Pilih Peran</p>
             <select
               className="p-2 w-full md:w-64 border-2 border-black rounded-xl bg-coklat-kuning"
-              id="roleSelect"
-              name="role"
-              value={formData.role}
+              id="id_role"
+              name="id_role"
+              value={formData.id_role}
               onChange={handleChange}
             >
               {roleOptions.map((option) => (
@@ -65,16 +72,16 @@ function Registration() {
             </select>
           </div>
 
-          {formData.role === "Kurir" && ( // Menampilkan input area_id hanya saat role adalah "Kurir"
+          {formData.id_role == 1 && ( // Menampilkan input area_id hanya saat role adalah "Kurir"
             <div className="text-center text-l p-4 md:p-1">
               <p>Masukkan Area ID</p>
               <input
                 className="p-2 w-full md:w-64 border-2 border-black rounded-xl bg-coklat-kuning placeholder-black"
                 type="text"
-                id="area_id"
-                name="area_id"
+                id="id_area"
+                name="id_area"
                 placeholder="Area ID"
-                value={formData.area_id}
+                value={formData.id_area}
                 onChange={handleChange}
                 autoComplete="none"
               />
@@ -96,14 +103,14 @@ function Registration() {
           </div>
 
           <div className="text-center text-l p-4 md:p-1">
-            <p>Masukkan Username</p>
+            <p>Masukkan Email</p>
             <input
               className="p-2 w-full md:w-64 border-2 border-black rounded-xl bg-coklat-kuning placeholder-black"
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
               onChange={handleChange}
               autoComplete="none"
             />
@@ -142,11 +149,9 @@ function Registration() {
               REGISTER
             </button>
           </div>
-
         </form>
       </div>
     </>
-
   )
 }
 

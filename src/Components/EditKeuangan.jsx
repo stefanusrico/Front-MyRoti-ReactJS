@@ -11,13 +11,13 @@ function EditKeuangan() {
   const { id } = useParams()
 
   const [formData, setFormData] = useState({
-    nama_keuangan: "",
-    password: "",
+    name: "",
+    password_unhashed: "",
   })
 
   const [prevFormData, setPrevFormData] = useState({
-    nama_keuangan: "",
-    password: "",
+    name: "",
+    password_unhashed: "",
   })
 
   const [error, setError] = useState("")
@@ -32,11 +32,14 @@ function EditKeuangan() {
         const keuanganData = response.data
         console.log(keuanganData)
 
-        setPrevFormData({ ...formData })
+        setPrevFormData({
+          name: keuanganData[0].name,
+          password_unhashed: keuanganData[0].password_unhashed,
+        })
 
         setFormData({
-          nama_keuangan: keuanganData.nama_keuangan,
-          password: keuanganData.password,
+          name: keuanganData[0].name,
+          password_unhashed: keuanganData[0].password_unhashed,
         })
       } catch (error) {
         setError("Error fetching data")
@@ -45,7 +48,7 @@ function EditKeuangan() {
     }
 
     fetchData()
-  }, [])
+  }, [id])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -69,11 +72,11 @@ function EditKeuangan() {
         formData
       )
 
-      if (formData.password !== prevFormData.password) {
+      if (formData.password_unhashed !== prevFormData.password_unhashed) {
         // Jika password baru dimasukkan, perbarui password pengguna (User)
         const passwordResponse = await axios.put(
           `http://127.0.0.1:8000/api/update-keuangan-password/${id}`,
-          { password: formData.password }
+          { password_unhashed: formData.password_unhashed }
         )
         console.log("Password Updated:", passwordResponse.data)
       }
@@ -140,8 +143,8 @@ function EditKeuangan() {
               </Typography>
               <Input
                 size="lg"
-                name="nama_keuangan"
-                value={formData.nama_keuangan}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 placeholder="Name"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -157,8 +160,8 @@ function EditKeuangan() {
                   <Input
                     type={showPassword ? "text" : "password"}
                     size="lg"
-                    name="password"
-                    value={formData.password}
+                    name="password_unhashed"
+                    value={formData.password_unhashed}
                     onChange={handleChange}
                     placeholder="Password"
                     labelProps={{

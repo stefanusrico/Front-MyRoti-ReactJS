@@ -5,37 +5,45 @@ import { useNavigate } from "react-router-dom"
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
-  const navigate = useNavigate() // Inisialisasi useHistory
+  const navigate = useNavigate()
 
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login", {
-        username: username,
+        email: email,
         password: password,
       })
 
       if (response.status === 200) {
-        setUsername("")
+        setEmail("")
         setPassword("")
         setError("")
 
-        // Redirect user based on their role
-        if (response.data.user.role === "Koordinator") {
-          navigate("/koordinator/lapak")
-        } else if (response.data.user.role === "Kurir") {
-          navigate("/kurir")
-        } else if (response.data.user.role === "Keuangan") {
-          navigate("/keuangan")
-        } else if (response.data.user.role === "Admin") {
-          navigate("/admin/dashboard")
+        const userRole = response.data.user.id_role
+
+        switch (userRole) {
+          case 3:
+            navigate("/koordinator/lapak")
+            break
+          case 1:
+            navigate("/kurir")
+            break
+          case 4:
+            navigate("/keuangan")
+            break
+          case 2:
+            navigate("/admin/dashboard")
+            break
+          default:
+            setError("Invalid role")
         }
       } else {
-        setError("Invalid username or password.")
+        setError("Invalid email or password.")
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -77,12 +85,12 @@ const Login = () => {
                   <div className="w-full max-w-md">
                     <input
                       className="p-2 rounded-xl border w-full"
-                      type="text"
-                      id="username"
-                      placeholder="Username"
+                      type="email"
+                      id="email"
+                      placeholder="Email"
                       autoComplete="none"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                   </div>

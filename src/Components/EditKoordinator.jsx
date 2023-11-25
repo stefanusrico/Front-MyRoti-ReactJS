@@ -11,13 +11,13 @@ function EditKoordinator() {
   const { id } = useParams()
 
   const [formData, setFormData] = useState({
-    nama_koordinator: "",
-    password: "",
+    name: "",
+    password_unhashed: "",
   })
 
   const [prevFormData, setPrevFormData] = useState({
-    nama_koordinator: "",
-    password: "",
+    name: "",
+    password_unhashed: "",
   })
 
   const [error, setError] = useState("")
@@ -30,14 +30,20 @@ function EditKoordinator() {
           `http://127.0.0.1:8000/api/data-koordinator/${id}`
         )
         const koordinatorData = response.data
-        console.log(koordinatorData)
 
-        setPrevFormData({ ...formData })
+        console.log("Data dari API:", koordinatorData)
 
+        // Set nilai awal state formData dan prevFormData
         setFormData({
-          nama_koordinator: koordinatorData.nama_koordinator,
-          password: koordinatorData.password,
+          name: koordinatorData[0].name,
+          password_unhashed: koordinatorData[0].password_unhashed,
         })
+        setPrevFormData({
+          name: koordinatorData[0].name,
+          password_unhashed: koordinatorData[0].password_unhashed,
+        })
+
+        console.log("Data setelah diatur:", formData)
       } catch (error) {
         setError("Error fetching data")
         console.error("Error fetching data:", error)
@@ -46,6 +52,8 @@ function EditKoordinator() {
 
     fetchData()
   }, [id])
+
+  console.log("Render, Data di dalam state formData:", formData)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -69,11 +77,11 @@ function EditKoordinator() {
         formData
       )
 
-      if (formData.password !== prevFormData.password) {
+      if (formData.password_unhashed !== prevFormData.password_unhashed) {
         // Jika password baru dimasukkan, perbarui password pengguna (User)
         const passwordResponse = await axios.put(
           `http://127.0.0.1:8000/api/update-koordinator-password/${id}`,
-          { password: formData.password }
+          { password_unhashed: formData.password_unhashed }
         )
         console.log("Password Updated:", passwordResponse.data)
       }
@@ -139,8 +147,8 @@ function EditKoordinator() {
               </Typography>
               <Input
                 size="lg"
-                name="nama_koordinator"
-                value={formData.nama_koordinator}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 placeholder="Name"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -156,8 +164,8 @@ function EditKoordinator() {
                   <Input
                     type={showPassword ? "text" : "password"}
                     size="lg"
-                    name="password"
-                    value={formData.password}
+                    name="password_unhashed"
+                    value={formData.password_unhashed}
                     onChange={handleChange}
                     placeholder="Password"
                     labelProps={{
