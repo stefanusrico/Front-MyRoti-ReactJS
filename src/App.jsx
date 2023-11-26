@@ -17,6 +17,8 @@ import DashboardAdmin from "./Components/DashboardAdmin"
 import KoordinatorLapakFormAdd from "./Components/KoordinatorLapakFormAdd.jsx"
 import KoordinatorLapakFormEdit from "./Components/KoordinatorLapakFormEdit.jsx"
 import EditKurir from "./Components/EditKurir"
+import EditKoordinator from "./Components/EditKoordinator.jsx"
+import EditKeuangan from "./Components/EditKeuangan.jsx"
 import NavKurir from "./Components/NavKurir"
 import KurirPengiriman from "./Components/KurirPengiriman"
 import KurirRekapPengiriman from "./Components/KurirRekapPengiriman.jsx"
@@ -51,6 +53,9 @@ function App() {
       <Route path="/admin/data-kurir" element={<DataKurir />} />
       <Route path="/admin/data-koordinator" element={<DataKoordinator />} />
       <Route path="/admin/data-keuangan" element={<DataKeuangan />} />
+      <Route path="/edit-kurir/:id" element={<EditKurir />} />
+      <Route path="/edit-koordinator/:id" element={<EditKoordinator />} />
+      <Route path="/edit-keuangan/:id" element={<EditKeuangan />} />
       {/* koordinator distribusi */}
       <Route path="/post" element={<Distribusi />} />
       <Route
