@@ -83,11 +83,13 @@ function KoordinatorLapak() {
     try {
       // e.preventDefault();
       const postData = {
-        lapak_id: idLapak,
-        roti_id: formData.roti_id,
+        id_lapak: idLapak,
+        id_roti: formData.roti_id,
         jumlah_roti_alokasi: formData.jumlah_roti,
         keterangan: "In Progress",
       };
+
+      console.log("data : ", postData.keterangan);
 
       const postResponse = await axios.post(
         "http://127.0.0.1:8000/api/alokasi",
@@ -309,7 +311,7 @@ function KoordinatorLapak() {
                 <select
                   name="roti_id"
                   className="w-full p-2 border border-gray-300 rounded-md"
-                  onChange={handleInputChange}
+                  onClick={handleInputChange}
                 >
                   {roti.map((roti, index) => (
                     <option key={index} value={roti.id}>
