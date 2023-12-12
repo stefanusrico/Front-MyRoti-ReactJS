@@ -148,7 +148,7 @@ function editDistribusi() {
     console.log("Editing lapak with id:", idAlokasi);
     try {
       const data = {
-        keterangan: "Done!",
+        keterangan: "Done",
       };
 
       const response = await axios.put(
@@ -411,7 +411,7 @@ function editDistribusi() {
                             setValue(rowData.id);
                           }}
                           className={`w-full p-2 text-white rounded-full transition duration-200 focus:outline-none focus-visible:outline-red-600 ${
-                            rowData.keterangan === "Done!"
+                            rowData.keterangan === "Done"
                               ? "bg-green-500 hover:bg-white hover:text-green-500"
                               : rowData.keterangan === "In Progress"
                               ? "bg-yellow-500 hover:bg-white hover:text-yellow-500"

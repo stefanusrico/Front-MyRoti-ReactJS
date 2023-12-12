@@ -14,7 +14,7 @@ function pilihLapak() {
   const [lapak, setLapak] = useState([]);
   const [area, setArea] = useState([]);
   const [formData, setFormData] = useState({
-    area_id: "",
+    area_id: "1",
   });
   
 
@@ -87,7 +87,7 @@ function pilihLapak() {
 
   useEffect(() => {
     getData();
-    // getLapak();
+    getLapak();
     getArea();
   }, []);
 
@@ -125,7 +125,7 @@ function pilihLapak() {
           <select
             name="area_id"
             className="w-72 p-2 border border-gray-300 rounded-md"
-            onChange={handleInputChange}
+            onClick={handleInputChange}
             style={{ transform: "translate(-50%, -50%)" }}
           >
             {area.map((area, index) => (
