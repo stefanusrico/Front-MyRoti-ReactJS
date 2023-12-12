@@ -13,6 +13,8 @@ import Distribusi from "./Components/distribusiKurir"
 import EditDistribusi from "./Components/editDistribusi"
 import PilihLapak from "./Components/pilihLapak"
 import KoordinatorProduct from "./Components/KoordinatorProduk"
+import KoordinatorProductFormAdd from "./Components/KoordinatorProductFormAdd.jsx"
+import KoordinatorProductFormEdit from "./Components/KoordinatorProductFormEdit.jsx"
 import DashboardAdmin from "./Components/DashboardAdmin"
 import KoordinatorLapakFormAdd from "./Components/KoordinatorLapakFormAdd.jsx"
 import KoordinatorLapakFormEdit from "./Components/KoordinatorLapakFormEdit.jsx"
@@ -20,7 +22,7 @@ import EditKurir from "./Components/EditKurir"
 import EditKoordinator from "./Components/EditKoordinator.jsx"
 import EditKeuangan from "./Components/EditKeuangan.jsx"
 import NavKurir from "./Components/NavKurir"
-import KurirPengiriman from "./Components/KurirPengiriman"
+import KurirPengiriman from "./Components/KurirPengiriman.jsx"
 import KurirRekapPengiriman from "./Components/KurirRekapPengiriman.jsx"
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
         element={<KoordinatorLapakFormEdit />}
       />
       <Route path="/koordinator/product" element={<KoordinatorProduct />} />
+      <Route path="/koordinator/tambah-roti" element={<KoordinatorProductFormAdd />} />
+      <Route path="/koordinator/edit-roti/:id" element={<KoordinatorProductFormEdit />} />
       {/* Admin */}
       <Route path="/admin/dashboard" element={<DashboardAdmin />} />
       <Route path="/admin/data-kurir" element={<DataKurir />} />
@@ -57,12 +61,13 @@ function App() {
       <Route path="/edit-koordinator/:id" element={<EditKoordinator />} />
       <Route path="/edit-keuangan/:id" element={<EditKeuangan />} />
       {/* koordinator distribusi */}
-      <Route path="/post" element={<Distribusi />} />
+      <Route path="/koordinator/post" element={<Distribusi />} />
       <Route
         path="/edit-distribusi/:idKurir/:idLapak"
         element={<EditDistribusi />}
       />
       <Route path="/pilih-lapak/:id" element={<PilihLapak />} />
+      <Route path="/kurir/:id/pengiriman" element={<KurirPengiriman />} />
     </Routes>
   )
 }
