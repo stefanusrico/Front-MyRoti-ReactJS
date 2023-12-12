@@ -57,7 +57,7 @@ function App() {
       <Route path="/edit-koordinator/:id" element={<EditKoordinator />} />
       <Route path="/edit-keuangan/:id" element={<EditKeuangan />} />
       {/* koordinator distribusi */}
-      <Route path="/post" element={<Distribusi />} />
+      <Route path="/koordinator/post" element={<Distribusi />} />
       <Route
         path="/edit-distribusi/:idKurir/:idLapak"
         element={<EditDistribusi />}
