@@ -8,7 +8,7 @@ import { checklist, delivered, trash } from "../assets";
 
 // import gambarWarung from "../assets/gambarwarung.jpg"
 
-function KoordinatorLapak() {
+function pilihLapak() {
   const { id } = useParams();
   const [card, setCard] = useState({});
   const [lapak, setLapak] = useState([]);
@@ -16,7 +16,7 @@ function KoordinatorLapak() {
   const [formData, setFormData] = useState({
     area_id: "",
   });
-  const [showAlert, setShowAlertSuccess] = useState(false);
+  
 
   const getData = async () => {
     try {
@@ -60,7 +60,7 @@ function KoordinatorLapak() {
     console.log("Editing lapak with id:", id);
     try {
       const data = {
-        kurir_id: id,
+        id_kurir: id,
         // jumlah_roti: formData.jumlah_roti,
       };
 
@@ -94,32 +94,7 @@ function KoordinatorLapak() {
   return (
     <>
       <NavKoor />
-      {showAlert && (
-        <div className="pt-20 pb-0 sm:ml-64 overflow-y-auto flex items-center justify-center h-screen">
-          <div className="w-56 bg-gray-100 p-8 gap-4 rounded-lg shadow-md text-center flex flex-col items-center mx-auto">
-            <p className="notificationHeading text-black font-semibold text-sm">
-              Notifikasi
-            </p>
-            <img
-              src={checklist}
-              className="w-20 mx-0 my-4 fill-current"
-              viewBox="0 0 512 512"
-              alt=""
-            />
-            <p className="mx-0 my-4 text-gray-500 text-xs font-semibold text-center">
-              Berhasil Menambahkan Data Di Tabel Alokasi
-            </p>
-            <div className="buttonContainer flex flex-col gap-2">
-              <button
-                className="AllowBtn w-32 h-8 bg-green-500 text-white rounded-full text-xs font-semibold cursor-pointer focus:outline-none hover:bg-green-700"
-                onClick={() => window.location.reload()}
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      
       <div className="h-screen overflow-y-auto">
         {card[0] && (
           <div className="pt-20 pb-0 sm:ml-64 overflow-y-auto flex items-center justify-center">
@@ -150,7 +125,7 @@ function KoordinatorLapak() {
           <select
             name="area_id"
             className="w-72 p-2 border border-gray-300 rounded-md"
-            onClick={handleInputChange}
+            onChange={handleInputChange}
             style={{ transform: "translate(-50%, -50%)" }}
           >
             {area.map((area, index) => (
@@ -176,7 +151,7 @@ function KoordinatorLapak() {
                   >
                     <div
                       class="m-2 group px-10 py-5 bg-white/10 rounded-lg flex flex-col items-center justify-center gap-2 relative 
-                  after:absolute after:h-full after:bg-[#abd373] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg 
+                  after:absolute after:h-full after:bg-Raw-sienna z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg 
                   transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&amp;_p]:delay-200 [&amp;_p]:transition-all"
                     >
                       <p class="cardtxt font-semibold text-black tracking-wider group-hover:text-white text-xl text-center">
@@ -193,7 +168,7 @@ function KoordinatorLapak() {
                         <Link to={`/edit-distribusi/${card[0].id}/${lapak.id}`}>
                           <Button
                             onClick={() => getIdLapak(lapak.id)}
-                            className="bg-[#abd373] hover:bg-white text-white hover:text-[#abd373] text-sm font-bold py-2 px-8 rounded-full"
+                            className="bg-Raw-sienna hover:bg-white text-white hover:text-Raw-sienna text-sm font-bold py-2 px-8 rounded-full"
                           >
                             Tambahkan Lapak
                           </Button>
@@ -212,4 +187,4 @@ function KoordinatorLapak() {
     </>
   );
 }
-export default KoordinatorLapak;
+export default pilihLapak;

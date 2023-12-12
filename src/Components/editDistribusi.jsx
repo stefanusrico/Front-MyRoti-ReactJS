@@ -6,7 +6,7 @@ import { checklist, delivered, trash } from "../assets";
 import { useParams } from "react-router-dom";
 import { Card, Typography } from "@material-tailwind/react";
 
-function KoordinatorLapak() {
+function editDistribusi() {
   const { idKurir, idLapak } = useParams();
   const [card, setCard] = useState({}); //untuk profil kurir
   const [lapak, setLapak] = useState([]);
@@ -290,7 +290,7 @@ function KoordinatorLapak() {
                     {/* {card[0].id} */}
                     <p>Nilai id kurir: {idKurir}</p>
                     <p>Nilai id lapak: {idLapak}</p>
-                  </h5> 
+                  </h5>
                 </div>
               </div>
             </div>
@@ -351,10 +351,11 @@ function KoordinatorLapak() {
         </div>
 
         <Card
-          className="pt-20 pb-0 sm:ml-64 overflow-y-auto flex items-center justify-center"
-          style={{ maxHeight: "80vh", maxWidth: "85%" }}
-        >
-          <table className="w-full min-w-max table-auto text-left">
+          className="pt-20 pb-0 md:ml-64 overflow-y-auto  items-center justify-center"
+          style={{ maxHeight: "80vh", maxWidth: "100%" }} 
+        ></Card>
+        <div className="md:ml-64 overflow-x-auto">
+          <table className="w-full divide-y  text-left">
             <thead>
               <tr>
                 {TABLE_HEAD.map((head) => (
@@ -446,7 +447,7 @@ function KoordinatorLapak() {
                 ))}
             </tbody>
           </table>
-        </Card>
+        </div>
 
         {/* Tampilkan navigasi halaman */}
         <div className="flex justify-center mt-4">
@@ -476,4 +477,4 @@ function KoordinatorLapak() {
   );
 }
 
-export default KoordinatorLapak;
+export default editDistribusi;
