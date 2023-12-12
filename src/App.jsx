@@ -20,7 +20,7 @@ import EditKurir from "./Components/EditKurir"
 import EditKoordinator from "./Components/EditKoordinator.jsx"
 import EditKeuangan from "./Components/EditKeuangan.jsx"
 import NavKurir from "./Components/NavKurir"
-import KurirPengiriman from "./Components/KurirPengiriman"
+import KurirPengiriman from "./Components/KurirPengiriman.jsx"
 import KurirRekapPengiriman from "./Components/KurirRekapPengiriman.jsx"
 
 function App() {
@@ -63,6 +63,7 @@ function App() {
         element={<EditDistribusi />}
       />
       <Route path="/pilih-lapak/:id" element={<PilihLapak />} />
+      <Route path="/kurir/:id/pengiriman" element={<KurirPengiriman />} />
     </Routes>
   )
 }
