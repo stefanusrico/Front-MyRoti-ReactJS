@@ -13,6 +13,8 @@ import Distribusi from "./Components/distribusiKurir"
 import EditDistribusi from "./Components/editDistribusi"
 import PilihLapak from "./Components/pilihLapak"
 import KoordinatorProduct from "./Components/KoordinatorProduk"
+import KoordinatorProductFormAdd from "./Components/KoordinatorProductFormAdd.jsx"
+import KoordinatorProductFormEdit from "./Components/KoordinatorProductFormEdit.jsx"
 import DashboardAdmin from "./Components/DashboardAdmin"
 import KoordinatorLapakFormAdd from "./Components/KoordinatorLapakFormAdd.jsx"
 import KoordinatorLapakFormEdit from "./Components/KoordinatorLapakFormEdit.jsx"
@@ -48,6 +50,8 @@ function App() {
         element={<KoordinatorLapakFormEdit />}
       />
       <Route path="/koordinator/product" element={<KoordinatorProduct />} />
+      <Route path="/koordinator/tambah-roti" element={<KoordinatorProductFormAdd />} />
+      <Route path="/koordinator/edit-roti/:id" element={<KoordinatorProductFormEdit />} />
       {/* Admin */}
       <Route path="/admin/dashboard" element={<DashboardAdmin />} />
       <Route path="/admin/data-kurir" element={<DataKurir />} />
