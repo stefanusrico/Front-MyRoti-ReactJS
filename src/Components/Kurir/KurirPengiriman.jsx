@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import NavKurir from "./NavKurir";
+import NavKurir from "../NavKurir";
 
 function KurirPengiriman() {
   const { id } = useParams();
@@ -148,7 +148,7 @@ function KurirPengiriman() {
   return (
     <>
       <NavKurir />
-      <div className="md:mt-4 bg-gray-100 text-gray-900 h-screen overflow-y-auto">
+      <div className="md:mt-4 bg-gray-100 text-gray-900 h-screen overflow-y-auto flex justify-center">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4">
           <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
             <div className="md:p-10 md:ml-60 md:mt-7 border-2 border-gray-400">

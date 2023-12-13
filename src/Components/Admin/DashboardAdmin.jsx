@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import NavAdmin from "./NavbarAdmin"
+import NavAdmin from "../NavbarAdmin"
 
 function DashboardAdmin() {
   const [amountKoordinator, setAmountKoordinator] = useState(null)

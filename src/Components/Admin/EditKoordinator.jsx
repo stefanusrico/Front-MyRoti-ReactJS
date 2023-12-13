@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom"
 import { Card, Input, Button, Typography } from "@material-tailwind/react"
-import NavAdmin from "./NavbarAdmin"
+import NavAdmin from "../NavbarAdmin"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import Swal from "sweetalert2"
 
-function EditKeuangan() {
+function EditKoordinator() {
   const { id } = useParams()
 
   const [formData, setFormData] = useState({
@@ -27,20 +27,23 @@ function EditKeuangan() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/data-keuangan/${id}`
+          `http://127.0.0.1:8000/api/data-koordinator/${id}`
         )
-        const keuanganData = response.data
-        console.log(keuanganData)
+        const koordinatorData = response.data
 
-        setPrevFormData({
-          name: keuanganData[0].name,
-          password_unhashed: keuanganData[0].password_unhashed,
-        })
+        console.log("Data dari API:", koordinatorData)
 
+        // Set nilai awal state formData dan prevFormData
         setFormData({
-          name: keuanganData[0].name,
-          password_unhashed: keuanganData[0].password_unhashed,
+          name: koordinatorData[0].name,
+          password_unhashed: koordinatorData[0].password_unhashed,
         })
+        setPrevFormData({
+          name: koordinatorData[0].name,
+          password_unhashed: koordinatorData[0].password_unhashed,
+        })
+
+        console.log("Data setelah diatur:", formData)
       } catch (error) {
         setError("Error fetching data")
         console.error("Error fetching data:", error)
@@ -49,6 +52,8 @@ function EditKeuangan() {
 
     fetchData()
   }, [id])
+
+  console.log("Render, Data di dalam state formData:", formData)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -68,21 +73,20 @@ function EditKeuangan() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/update-keuangan/${id}`,
+        `http://127.0.0.1:8000/api/update-koordinator/${id}`,
         formData
       )
 
       if (formData.password_unhashed !== prevFormData.password_unhashed) {
         // Jika password baru dimasukkan, perbarui password pengguna (User)
         const passwordResponse = await axios.put(
-          `http://127.0.0.1:8000/api/update-keuangan-password/${id}`,
+          `http://127.0.0.1:8000/api/update-koordinator-password/${id}`,
           { password_unhashed: formData.password_unhashed }
         )
         console.log("Password Updated:", passwordResponse.data)
       }
 
       console.log("Response from API:", response.data)
-
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -131,10 +135,10 @@ function EditKeuangan() {
       <div className="md:p-20 md:pt-20 md:pb-52 md:ml-48 scroll max-h-[100vh] overflow-y-auto flex items-center justify-center">
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
-            Edit Keuangan
+            Edit Koordinator
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
-            Edit Keuangan data below:
+            Edit Koordinator data below:
           </Typography>
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 h-full max-h-screen">
             <div className="mb-1 flex flex-col gap-6">
@@ -197,4 +201,4 @@ function EditKeuangan() {
   )
 }
 
-export default EditKeuangan
+export default EditKoordinator

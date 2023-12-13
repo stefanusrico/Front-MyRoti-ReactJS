@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { useTable, usePagination } from "react-table"
-import NavAdmin from "./NavbarAdmin"
+import NavAdmin from "../NavbarAdmin"
 import { Link } from "react-router-dom"
 import Swal from "sweetalert2"
 
@@ -25,7 +25,7 @@ function PasswordCell({ password }) {
   )
 }
 
-function DataKoordinator() {
+function DataKeuangan() {
   const [data, setData] = useState([])
   const columns = React.useMemo(
     () => [
@@ -34,7 +34,7 @@ function DataKoordinator() {
         accessor: "id",
       },
       {
-        Header: "Nama Koordinator",
+        Header: "Nama Keuangan",
         accessor: "name",
       },
       {
@@ -56,7 +56,7 @@ function DataKoordinator() {
         Cell: ({ row }) => (
           <>
             <div className="flex justify-between">
-              <Link to={`/edit-koordinator/${row.original.id}`}>Edit</Link>
+              <Link to={`/edit-keuangan/${row.original.id}`}>Edit</Link>
               <Link>
                 <button onClick={() => handleDelete(row.original.id)}>
                   Delete
@@ -84,11 +84,11 @@ function DataKoordinator() {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/delete-koordinator/${id}`)
+        await axios.delete(`http://127.0.0.1:8000/api/delete-keuangan/${id}`)
         getData()
         Swal.fire({
           title: "Deleted!",
-          text: "Koordinator has been deleted.",
+          text: "Keuangan has been deleted.",
           icon: "success",
         })
       } catch (error) {
@@ -102,7 +102,6 @@ function DataKoordinator() {
     }
   }
 
-  // Define pagination options
   const {
     getTableProps,
     getTableBodyProps,
@@ -130,11 +129,11 @@ function DataKoordinator() {
   const getData = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/data-koordinator"
+        "http://127.0.0.1:8000/api/data-keuangan"
       )
       console.log(response)
-      const adminKoordinator = response.data
-      setData(adminKoordinator)
+      const adminKeuangan = response.data
+      setData(adminKeuangan)
     } catch (error) {
       console.error("Error fetching data:", error)
     }
@@ -289,4 +288,4 @@ function DataKoordinator() {
   )
 }
 
-export default DataKoordinator
+export default DataKeuangan

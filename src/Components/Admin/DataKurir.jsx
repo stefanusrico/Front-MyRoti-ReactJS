@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { useTable, usePagination } from "react-table"
-import NavAdmin from "./NavbarAdmin"
+import NavAdmin from "../NavbarAdmin"
 import { Link } from "react-router-dom"
 import Swal from "sweetalert2"
 

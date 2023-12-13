@@ -1,10 +1,9 @@
-import NavKoor from "./NavKoor";
+import NavKoor from "../NavKoor";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import profil from "../assets/profil.png";
 import { Button, Navbar } from "@material-tailwind/react";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import { checklist, delivered, trash } from "../assets";
+import { profil } from "../../assets/index";
 
 // import gambarWarung from "../assets/gambarwarung.jpg"
 
@@ -16,7 +15,6 @@ function pilihLapak() {
   const [formData, setFormData] = useState({
     area_id: "1",
   });
-  
 
   const getData = async () => {
     try {
@@ -38,7 +36,7 @@ function pilihLapak() {
         `http://127.0.0.1:8000/api/lapak-area/${formData.area_id}`
       );
       const dataLapak = response.data;
-      console.log(dataLapak);
+      console.log("data ",dataLapak);
       setLapak(dataLapak);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -94,7 +92,7 @@ function pilihLapak() {
   return (
     <>
       <NavKoor />
-      
+
       <div className="h-screen overflow-y-auto">
         {card[0] && (
           <div className="pt-20 pb-0 sm:ml-64 overflow-y-auto flex items-center justify-center">
@@ -103,7 +101,7 @@ function pilihLapak() {
                 <img
                   className="p-2 rounded-t-lg"
                   src={profil}
-                  alt="product image"
+                  alt="kurir image"
                 />
                 <div className="px-5 pb-1">
                   <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-center">
@@ -147,13 +145,20 @@ function pilihLapak() {
                 {lapak.map((lapak, index) => (
                   <div
                     key={index}
-                    className="w-60 h-80 bg-gray-50 p-3 flex flex-col gap-1 rounded-2xl"
+                    className="w-80 h-120 bg-gray-50 p-3 flex flex-col gap-1 rounded-2xl"
                   >
                     <div
                       class="m-2 group px-10 py-5 bg-white/10 rounded-lg flex flex-col items-center justify-center gap-2 relative 
                   after:absolute after:h-full after:bg-Raw-sienna z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg 
                   transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0 [&amp;_p]:delay-200 [&amp;_p]:transition-all"
                     >
+                      <div className="relative w-2/5 m-0 overflow-hidden text-gray-700 bg-white rounded-r-none bg-clip-border rounded-xl shrink-0">
+                        <img
+                          src={lapak.image_url}
+                          alt={`card-image-${index}`}
+                          className="object-cover h-60/2 w-96/2"
+                        />
+                      </div>
                       <p class="cardtxt font-semibold text-black tracking-wider group-hover:text-white text-xl text-center">
                         {lapak.nama_lapak}
                         <p>id kurir : {id}</p>

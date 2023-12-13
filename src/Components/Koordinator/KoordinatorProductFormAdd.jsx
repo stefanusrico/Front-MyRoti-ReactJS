@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import axios from "axios"
-import NavKoor from "./NavKoor"
+import NavKoor from "../NavKoor"
 
 function KoordinatorProductFormAdd() {
   const [formData, setFormData] = useState({

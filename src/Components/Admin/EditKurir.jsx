@@ -1,23 +1,25 @@
 import { useParams } from "react-router-dom"
 import { Card, Input, Button, Typography } from "@material-tailwind/react"
-import NavAdmin from "./NavbarAdmin"
+import NavAdmin from "../NavbarAdmin"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import Swal from "sweetalert2"
 
-function EditKoordinator() {
+function EditKurir() {
   const { id } = useParams()
 
   const [formData, setFormData] = useState({
     name: "",
     password_unhashed: "",
+    id_area: "",
   })
 
   const [prevFormData, setPrevFormData] = useState({
     name: "",
     password_unhashed: "",
+    id_area: "",
   })
 
   const [error, setError] = useState("")
@@ -27,23 +29,25 @@ function EditKoordinator() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/data-koordinator/${id}`
+          `http://127.0.0.1:8000/api/data-kurir/${id}`
         )
-        const koordinatorData = response.data
+        const kurirData = response.data
+        console.log("Response from API:", kurirData) // Tambahkan ini untuk melihat respons dari server
 
-        console.log("Data dari API:", koordinatorData)
-
-        // Set nilai awal state formData dan prevFormData
-        setFormData({
-          name: koordinatorData[0].name,
-          password_unhashed: koordinatorData[0].password_unhashed,
-        })
+        // Periksa apakah properti user dan area ada sebelum mengaksesnya
         setPrevFormData({
-          name: koordinatorData[0].name,
-          password_unhashed: koordinatorData[0].password_unhashed,
+          name: kurirData.name,
+          email: kurirData.email,
+          password_unhashed: kurirData.password,
+          id_area: kurirData.id_area,
         })
 
-        console.log("Data setelah diatur:", formData)
+        setFormData({
+          name: kurirData.name,
+          email: kurirData.email,
+          password_unhashed: kurirData.password,
+          id_area: kurirData.id_area,
+        })
       } catch (error) {
         setError("Error fetching data")
         console.error("Error fetching data:", error)
@@ -52,8 +56,6 @@ function EditKoordinator() {
 
     fetchData()
   }, [id])
-
-  console.log("Render, Data di dalam state formData:", formData)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -73,20 +75,21 @@ function EditKoordinator() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/update-koordinator/${id}`,
+        `http://127.0.0.1:8000/api/update-kurir/${id}`,
         formData
       )
 
       if (formData.password_unhashed !== prevFormData.password_unhashed) {
         // Jika password baru dimasukkan, perbarui password pengguna (User)
         const passwordResponse = await axios.put(
-          `http://127.0.0.1:8000/api/update-koordinator-password/${id}`,
+          `http://127.0.0.1:8000/api/update-kurir-password/${id}`,
           { password_unhashed: formData.password_unhashed }
         )
         console.log("Password Updated:", passwordResponse.data)
       }
 
       console.log("Response from API:", response.data)
+
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -135,10 +138,10 @@ function EditKoordinator() {
       <div className="md:p-20 md:pt-20 md:pb-52 md:ml-48 scroll max-h-[100vh] overflow-y-auto flex items-center justify-center">
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
-            Edit Koordinator
+            Edit Kurir
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
-            Edit Koordinator data below:
+            Edit kurir data below:
           </Typography>
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 h-full max-h-screen">
             <div className="mb-1 flex flex-col gap-6">
@@ -181,6 +184,20 @@ function EditKoordinator() {
                   </button>
                 </div>
               </div>
+              <Typography variant="h6" color="blue-gray" className="-mb-3">
+                Area ID
+              </Typography>
+              <Input
+                size="lg"
+                name="id_area"
+                value={formData.id_area}
+                onChange={handleChange}
+                placeholder="Area ID"
+                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+              />
             </div>
             <Button
               className="bg-red-500 mt-6"
@@ -201,4 +218,4 @@ function EditKoordinator() {
   )
 }
 
-export default EditKoordinator
+export default EditKurir

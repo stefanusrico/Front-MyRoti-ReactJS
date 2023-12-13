@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
-import NavKoor from "./NavKoor"
+import NavKoor from "../NavKoor"
 import { useParams } from "react-router-dom"
 
 function KoordinatorLapakFormEdit() {

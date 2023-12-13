@@ -1,8 +1,8 @@
-import NavKoor from "./NavKoor";
+import NavKoor from "../NavKoor";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "@material-tailwind/react";
-import profil from "../assets/profil.png";
+import { profil } from "../../assets/index";
 import { useNavigate, Link } from "react-router-dom";
 
 // import LogoRoti from "../assets/LogoRoti.png"

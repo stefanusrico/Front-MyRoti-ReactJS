@@ -1,5 +1,5 @@
 import LogoRoti from "../assets/LogoRoti.png"
-import NavKoor from "./NavKoor"
+import NavKoor from "../NavKoor"
 import { Button } from "@material-tailwind/react"
 
 function KoordinatorCard() {

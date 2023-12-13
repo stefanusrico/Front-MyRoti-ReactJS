@@ -3,26 +3,26 @@ import { Route, Routes } from "react-router-dom"
 import Login from "./Components/Login"
 import Registration from "./Components/Registration"
 import NavKoor from "./Components/NavKoor"
-import KoordinatorLapak from "./Components/KoordinatorLapak"
+import KoordinatorLapak from "./Components/Koordinator/KoordinatorLapak.jsx"
 import LapakDistribusi from "./Components/LapakDistribusi"
 import KurirDistribusi from "./Components/KurirDistribusi"
-import DataKurir from "./Components/DataKurir"
-import DataKoordinator from "./Components/DataKoordinator"
-import DataKeuangan from "./Components/DataKeuangan"
-import Distribusi from "./Components/distribusiKurir"
-import EditDistribusi from "./Components/editDistribusi"
-import PilihLapak from "./Components/pilihLapak"
-import KoordinatorProduct from "./Components/KoordinatorProduk"
-import KoordinatorProductFormAdd from "./Components/KoordinatorProductFormAdd.jsx"
-import KoordinatorProductFormEdit from "./Components/KoordinatorProductFormEdit.jsx"
-import DashboardAdmin from "./Components/DashboardAdmin"
-import KoordinatorLapakFormAdd from "./Components/KoordinatorLapakFormAdd.jsx"
-import KoordinatorLapakFormEdit from "./Components/KoordinatorLapakFormEdit.jsx"
-import EditKurir from "./Components/EditKurir"
-import EditKoordinator from "./Components/EditKoordinator.jsx"
-import EditKeuangan from "./Components/EditKeuangan.jsx"
+import DataKurir from "./Components/Admin/DataKurir.jsx"
+import DataKoordinator from "./Components/Admin/DataKoordinator.jsx"
+import DataKeuangan from "./Components/Admin/DataKeuangan.jsx"
+import Distribusi from "./Components/Koordinator/distribusiKurir.jsx"
+import EditDistribusi from "./Components/Koordinator/editDistribusi.jsx"
+import PilihLapak from "./Components/Koordinator/pilihLapak.jsx"
+import KoordinatorProduct from "./Components/Koordinator/KoordinatorProduk.jsx"
+import KoordinatorProductFormAdd from "./Components/Koordinator/KoordinatorProductFormAdd.jsx"
+import KoordinatorProductFormEdit from "./Components/Koordinator/KoordinatorProductFormEdit.jsx"
+import DashboardAdmin from "./Components/Admin/DashboardAdmin.jsx"
+import KoordinatorLapakFormAdd from "./Components/Koordinator/KoordinatorLapakFormAdd.jsx"
+import KoordinatorLapakFormEdit from "./Components/Koordinator/KoordinatorLapakFormEdit.jsx"
+import EditKurir from "./Components/Admin/EditKurir.jsx"
+import EditKoordinator from "./Components/Admin/EditKoordinator.jsx"
+import EditKeuangan from "./Components/Admin/EditKeuangan.jsx"
 import NavKurir from "./Components/NavKurir"
-import KurirPengiriman from "./Components/KurirPengiriman.jsx"
+import KurirPengiriman from "./Components/Kurir/KurirPengiriman.jsx"
 import KurirRekapPengiriman from "./Components/KurirRekapPengiriman.jsx"
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
     <Routes>
       {/* Auth */}
       <Route path="/" element={<Login />} />
-      <Route path="/register" element={<Registration />} />
+      <Route path="/admin/register" element={<Registration />} />
       {/* Navbar */}
       <Route path="/navbar" element={<NavKoor />} />
       <Route path="/navkurir" element={<NavKurir />} />

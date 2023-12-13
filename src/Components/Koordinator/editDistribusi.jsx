@@ -1,8 +1,7 @@
-import NavKoor from "./NavKoor";
+import NavKoor from "../NavKoor";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import profil from "../assets/profil.png";
-import { checklist, delivered, trash } from "../assets";
+import { checklist, delivered, trash, profil } from "../../assets/index";
 import { useParams } from "react-router-dom";
 import { Card, Typography } from "@material-tailwind/react";
 
@@ -297,7 +296,7 @@ function editDistribusi() {
           </div>
         )}
 
-        <div className="pt-20 pb-4 sm:ml-64 overflow-y-auto flex items-center justify-center">
+        <div className="pt-10 pb-4 sm:ml-64 overflow-y-auto flex items-center justify-center">
           <div className="w-60 h-80 bg-white p-6 flex flex-col gap-4 rounded-xl shadow-md">
             <div>
               <h5 className="text-xl font-semibold text-gray-900 text-center">
@@ -450,7 +449,7 @@ function editDistribusi() {
         </div>
 
         {/* Tampilkan navigasi halaman */}
-        <div className="flex justify-center mt-4">
+        <div className="mt-4 pt-10 pb-4 sm:ml-64 overflow-y-auto flex items-center justify-center">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
