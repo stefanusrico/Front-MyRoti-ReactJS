@@ -22,8 +22,18 @@ import EditKurir from "./Components/Admin/EditKurir.jsx"
 import EditKoordinator from "./Components/Admin/EditKoordinator.jsx"
 import EditKeuangan from "./Components/Admin/EditKeuangan.jsx"
 import NavKurir from "./Components/NavKurir"
+<<<<<<< Updated upstream
 import KurirPengiriman from "./Components/Kurir/KurirPengiriman.jsx"
+=======
+import KurirPengiriman from "./Components/KurirPengiriman.jsx"
+import Testing from "./Components/Test.jsx"
+import DashboardKeuangan from "./Components/DashboardKeuangan.jsx"
+import NavKeuangan from "./Components/NavbarKeuangan.jsx"
+>>>>>>> Stashed changes
 import KurirRekapPengiriman from "./Components/KurirRekapPengiriman.jsx"
+import DataHarian from "./Components/DataHarian.jsx"
+import DataMingguan from "./Components/DataKeuangan"
+import DataBulanan from "./Components/DataBulanan.jsx"
 
 function App() {
   return (
@@ -50,8 +60,14 @@ function App() {
         element={<KoordinatorLapakFormEdit />}
       />
       <Route path="/koordinator/product" element={<KoordinatorProduct />} />
-      <Route path="/koordinator/tambah-roti" element={<KoordinatorProductFormAdd />} />
-      <Route path="/koordinator/edit-roti/:id" element={<KoordinatorProductFormEdit />} />
+      <Route
+        path="/koordinator/tambah-roti"
+        element={<KoordinatorProductFormAdd />}
+      />
+      <Route
+        path="/koordinator/edit-roti/:id"
+        element={<KoordinatorProductFormEdit />}
+      />
       {/* Admin */}
       <Route path="/admin/dashboard" element={<DashboardAdmin />} />
       <Route path="/admin/data-kurir" element={<DataKurir />} />
@@ -68,6 +84,11 @@ function App() {
       />
       <Route path="/pilih-lapak/:id" element={<PilihLapak />} />
       <Route path="/kurir/:id/pengiriman" element={<KurirPengiriman />} />
+      <Route path="/test" element={<Testing />} />
+      <Route path="/keuangan/dashboard" element={<DashboardKeuangan />} />
+      <Route path="/keuangan/data-harian" element={<DataHarian />} />
+      <Route path="/keuangan/data-mingguan" element={<DataMingguan />} />
+      <Route path="/keuangan/data-bulanan" element={<DataBulanan />} />
     </Routes>
   )
 }

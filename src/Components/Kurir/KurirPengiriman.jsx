@@ -1,39 +1,47 @@
+<<<<<<< Updated upstream:src/Components/Kurir/KurirPengiriman.jsx
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import NavKurir from "../NavKurir";
+=======
+import { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
+import axios from "axios"
+import NavKurir from "./NavKurir"
+>>>>>>> Stashed changes:src/Components/KurirPengiriman.jsx
 
 function KurirPengiriman() {
-  const { id } = useParams();
-  const [lapakData, setLapakData] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const { id } = useParams()
+  const [lapakData, setLapakData] = useState(null)
+  const [showModal, setShowModal] = useState(false)
   const [formInput, setFormInput] = useState({
     lapak: "",
     id_alokasi: "",
     jumlah_roti_terjual: "",
-    jumlah_roti_tidak_terjual: "",
+    // jumlah_roti_tidak_terjual: "",
     pendapatan: "",
     hutang: "",
     catatan: "",
-  });
+    tanggal_transaksi: "",
+  })
 
   const getData = async () => {
     try {
       const response = await axios.get(
         `http://127.0.0.1:8000/api/tampil-lapak/${id}`
-      );
+      )
 
-      const dataAlokasi = response.data;
-      console.log(response.data);
-      setLapakData(dataAlokasi);
+      const dataAlokasi = response.data
+      console.log(dataAlokasi)
+      setLapakData(dataAlokasi)
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error)
     }
-  };
+  }
 
   const closeModal = () => {
-    setShowModal(false);
-  };
+    setShowModal(false)
+  }
 
   const simpanData = async (idAlokasi, namaLapak) => {
     try {
@@ -41,67 +49,58 @@ function KurirPengiriman() {
         ...prevData,
         id_alokasi: idAlokasi,
         lapak: namaLapak,
-      }));
-      setShowModal(true);
+      }))
+      setShowModal(true)
     } catch (error) {
-      console.error("Error updating data:", error);
+      console.error("Error updating data:", error)
       if (error.response) {
-        console.log(
-          "Server responded with non-2xx status",
-          error.response.data
-        );
+        console.log("Server responded with non-2xx status", error.response.data)
       }
     }
-  };
+  }
 
   const updateKeterangan = async (idAlokasi, namaLapak) => {
     try {
       const response = await axios.put(
         `http://127.0.0.1:8000/api/alokasi/${idAlokasi}/update-keterangan`
-      );
-      console.log(response.data);
+      )
+      console.log(response.data)
       setFormInput((prevData) => ({
         ...prevData,
         id_alokasi: idAlokasi,
         lapak: namaLapak,
-      }));
-      setShowModal(false);
-      window.location.reload();
+      }))
+      setShowModal(false)
+      window.location.reload()
     } catch (error) {
-      console.error("Error updating data:", error);
+      console.error("Error updating data:", error)
       if (error.response) {
-        console.log(
-          "Server responded with non-2xx status",
-          error.response.data
-        );
+        console.log("Server responded with non-2xx status", error.response.data)
       }
     }
-  };
+  }
 
   const handleFormInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormInput((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const submitForm = async () => {
     try {
       if (formInput.catatan !== null && formInput.catatan !== undefined) {
-        formInput.catatan = String(formInput.catatan);
+        formInput.catatan = String(formInput.catatan)
       }
-      const formData = new FormData();
-      formData.append("lapak", formInput.lapak);
-      formData.append("id_alokasi", formInput.id_alokasi);
-      formData.append("jumlah_roti_terjual", formInput.jumlah_roti_terjual);
-      formData.append(
-        "jumlah_roti_tidak_terjual",
-        formInput.jumlah_roti_tidak_terjual
-      );
-      formData.append("pendapatan", formInput.pendapatan);
-      formData.append("hutang", formInput.hutang);
-      formData.append("catatan", formInput.catatan);
+      const formData = new FormData()
+      formData.append("lapak", formInput.lapak)
+      formData.append("id_alokasi", formInput.id_alokasi)
+      formData.append("jumlah_roti_terjual", formInput.jumlah_roti_terjual)
+      formData.append("pendapatan", formInput.pendapatan)
+      formData.append("hutang", formInput.hutang)
+      formData.append("catatan", formInput.catatan)
+      formData.append("tanggal_transaksi", formInput.tanggal_transaksi)
 
       const response = await axios.post(
         "http://127.0.0.1:8000/api/transaksi",
@@ -111,29 +110,29 @@ function KurirPengiriman() {
             "Content-Type": "multipart/form-data",
           },
         }
-      );
+      )
 
-      console.log(response.data);
-      setShowModal(false);
-      updateKeterangan(formInput.id_alokasi, formInput.lapak);
+      console.log(response.data)
+      setShowModal(false)
+      updateKeterangan(formInput.id_alokasi, formInput.lapak)
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error submitting form:", error)
       if (error.response) {
         console.error(
           "Server responded with non-2xx status",
           error.response.data
-        );
+        )
       } else if (error.request) {
-        console.error("No response received from the server");
+        console.error("No response received from the server")
       } else {
-        console.error("Error setting up the request", error.message);
+        console.error("Error setting up the request", error.message)
       }
     }
-  };
+  }
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData()
+  }, [])
 
   useEffect(() => {
     if (lapakData && lapakData.length > 0) {
@@ -141,9 +140,9 @@ function KurirPengiriman() {
         ...prevData,
         id_alokasi: lapakData.id_alokasi,
         lapak: lapakData.nama_lapak,
-      }));
+      }))
     }
-  }, [lapakData]);
+  }, [lapakData])
 
   return (
     <>
@@ -266,7 +265,7 @@ function KurirPengiriman() {
                     className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
-                <div className="mb-4">
+                {/* <div className="mb-4">
                   <label
                     htmlFor="jumlah_roti_tidak_terjual"
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -281,7 +280,7 @@ function KurirPengiriman() {
                     onChange={handleFormInputChange}
                     className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   />
-                </div>
+                </div> */}
               </div>
               <div className="w-1/2 pl-2">
                 {/* Right Column */}
@@ -333,6 +332,22 @@ function KurirPengiriman() {
                     className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="tanggal_transaksi"
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                  >
+                    Tanggal Transaksi:
+                  </label>
+                  <input
+                    type="date"
+                    id="tanggal_transaksi"
+                    name="tanggal_transaksi"
+                    value={formInput.tanggal_transaksi}
+                    onChange={handleFormInputChange}
+                    className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
               </div>
             </form>
             <div className="flex justify-end mt-6">
@@ -354,7 +369,7 @@ function KurirPengiriman() {
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default KurirPengiriman;
+export default KurirPengiriman

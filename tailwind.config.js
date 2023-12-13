@@ -12,7 +12,7 @@ export default {
         coklat: "#E8B266",
         "coklat-kuning": "#CF9647",
         "light-green": "#22c55e",
-        "Sienna": "#CD8A40",
+        Sienna: "#CD8A40",
         "Raw-sienna": "#CD8A39",
       },
     },
